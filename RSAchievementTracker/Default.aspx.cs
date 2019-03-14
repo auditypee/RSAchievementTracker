@@ -6,72 +6,135 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 using System.Net;
-using System.IO;
-using System.Text.RegularExpressions;
 using AchievementTrackerHelper;
 using System.Data;
 
-namespace RSAchievementTracker {
-    public partial class Default : Page {
-        private string url;
+namespace RSAchievementTracker
+{
+    public partial class Default : Page
+    {
         private Helper helper;
+        private readonly string URLSTATS = "https://secure.runescape.com/m=hiscore/index_lite.ws?player=";
+        private readonly string URLQUESTS = "https://apps.runescape.com/runemetrics/quests?user=";
+        private readonly string INVALIDQUESTS = @"{""quests"":[],""loggedIn"":""false""}";
 
-        protected void Page_Load(object sender, EventArgs e) {
-            if (!IsPostBack) {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
                 // do something initially
             }
+            userStatsLbl.Text = "";
+            userQuestsLbl.Text = "";
+            statsGridView.Visible = false;
+            questsGridView.Visible = false;
         }
 
-        protected void trackBtn_Click(object sender, EventArgs e) {
+        protected void trackBtn_Click(object sender, EventArgs e)
+        {
             helper = new Helper();
-            url = "https://secure.runescape.com/m=hiscore/index_lite.ws?player=";
             string username = userNameTB.Text;
-            url += username;
-
-            string userStats = "";
-
-            // exception handling if the user does not exist or returns a 404
-            try {
+            
+            // get the user's stats
+            try
+            {
                 // gets the website's contents
-                userStats = helper.GetStats(url);
+                string userStats = helper.GetUserInfo(URLSTATS + username);
 
                 // populates the table's data from the string
-                helper.PopulateTable(userStats);
+                helper.PopulateStatsData(userStats);
 
                 // gets the Dictionary that contains the user's stats then creates the table
-                Dictionary<string, int[]> levels = helper.Levels;
-                CreateTable(levels);
-            } catch (WebException we) {
-                userStatsLbl.Text = string.Format("User \"{0}\" does not exist.", username);
-                statsGridView.Visible = false;
+                Dictionary<string, long[]> levels = helper.CurrentUser.Levels;
+                CreateStatsTable(levels);
+                
             }
-            
+            catch (WebException we)
+            {
+                userStatsLbl.Text = string.Format("User \"{0}\" does not exist.", username);
+            }
+
+            // get the user's quest progress
+            try
+            {
+                string userQuests = helper.GetUserInfo(URLQUESTS + username);
+                //System.Diagnostics.Debug.Write(userQuests);
+
+                if (userQuests != INVALIDQUESTS)
+                {
+                    helper.PopulateQuestsData(userQuests);
+                    List<Quest> quests = helper.CurrentUser.Quests;
+                    CreateQuestsTable(quests);
+                }
+                else
+                {
+                    userQuestsLbl.Text = string.Format("User \"{0}\" has their Runemetrics profile set to private.", username);
+                    questsGridView.Visible = false;
+                }
+            }
+            catch (WebException we)
+            {
+                questsGridView.Visible = false;
+            }
         }
 
         /*
          * Creates the data table from the user's stats
          */
-        protected void CreateTable(Dictionary<string, int[]> data) {
+        protected void CreateStatsTable(Dictionary<string, long[]> data)
+        {
             DataTable statsDataTable = new DataTable();
             // creates the columns
             statsDataTable.Columns.AddRange(new DataColumn[4] {
                 new DataColumn("Skill", typeof(string)),
-                new DataColumn("Level", typeof(int)),
+                new DataColumn("Level", typeof(long)),
                 new DataColumn("Experience", typeof(string)),
                 new DataColumn("Hiscores Rank", typeof(string))
             });
 
             // adds a row based on the given dictionary
-            foreach (KeyValuePair<string, int[]> kvp in data) {
-                //string text = string.Format("Key: {0}, Value: {1}", kvp.Key, kvp.Value.ElementAt(1));
-                //System.Diagnostics.Debug.Write(text + "\n");
+            foreach (KeyValuePair<string, long[]> kvp in data)
+            {
+                string skill = kvp.Key;
+                long level = kvp.Value.ElementAt(1);
+                string exp = helper.NumberFormat(kvp.Value.ElementAt(2));
+                string hiscore = helper.NumberFormat(kvp.Value.ElementAt(0));
 
-                statsDataTable.Rows.Add(kvp.Key, kvp.Value.ElementAt(1), helper.NumberFormat(kvp.Value.ElementAt(2)), helper.NumberFormat(kvp.Value.ElementAt(0)));
+                statsDataTable.Rows.Add(skill, level, exp, hiscore);
             }
 
             statsGridView.DataSource = statsDataTable;
             statsGridView.DataBind();
             statsGridView.Visible = true;
+        }
+
+        protected void CreateQuestsTable(List<Quest> quests)
+        {
+            DataTable questsDataTable = new DataTable();
+
+            questsDataTable.Columns.AddRange(new DataColumn[5] 
+            {
+                new DataColumn("Name", typeof(string)),
+                new DataColumn("Difficulty", typeof(string)),
+                new DataColumn("Quest Points", typeof(string)),
+                new DataColumn("Member", typeof(bool)),
+                new DataColumn("Status", typeof(string))
+            });
+
+            foreach (var quest in quests)
+            {
+                string title = quest.Title;
+                string difficulty = helper.ConvertDifficulty(quest.Difficulty);
+                string questPoints = quest.QuestPoints.ToString();
+                string members = quest.Members.ToString();
+                string status = helper.ConvertStatus(quest.Status, quest.Eligible);
+                questsDataTable.Rows.Add(title, difficulty, questPoints, members, status);
+            }
+
+            questsGridView.DataSource = questsDataTable;
+            questsGridView.DataBind();
+            questsGridView.Visible = true;
+
         }
     }
 }
