@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSAchievementTracker", "RSAchievementTracker\RSAchievementTracker.csproj", "{9DFF1658-20B5-42EE-87BE-9A3686097154}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AchievementTrackerHelper", "AchievementTrackerHelper\AchievementTrackerHelper.csproj", "{663BC1D6-E88A-4265-A63A-491F7E1B91EA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9DFF1658-20B5-42EE-87BE-9A3686097154}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DFF1658-20B5-42EE-87BE-9A3686097154}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DFF1658-20B5-42EE-87BE-9A3686097154}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DFF1658-20B5-42EE-87BE-9A3686097154}.Release|Any CPU.Build.0 = Release|Any CPU
+		{663BC1D6-E88A-4265-A63A-491F7E1B91EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{663BC1D6-E88A-4265-A63A-491F7E1B91EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{663BC1D6-E88A-4265-A63A-491F7E1B91EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{663BC1D6-E88A-4265-A63A-491F7E1B91EA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {961E324E-F576-40C6-A81B-6AE2B76D71D8}
+	EndGlobalSection
+EndGlobal
