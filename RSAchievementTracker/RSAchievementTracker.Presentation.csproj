@@ -75,6 +75,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\AchievementsDatabase.mdf" />
+    <Content Include="App_Data\AchievementsDatabase_log.ldf">
+      <DependentUpon>AchievementsDatabase.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -150,9 +154,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AchievementTrackerHelper\AchievementTrackerHelper.csproj">
+    <ProjectReference Include="..\AchievementTrackerHelper\RSAchievementTracker.Domain.csproj">
       <Project>{663bc1d6-e88a-4265-a63a-491f7e1b91ea}</Project>
-      <Name>AchievementTrackerHelper</Name>
+      <Name>RSAchievementTracker.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

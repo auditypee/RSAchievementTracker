@@ -17,22 +17,23 @@ namespace RSAchievementTracker
         private readonly string URLSTATS = "https://secure.runescape.com/m=hiscore/index_lite.ws?player=";
         private readonly string URLQUESTS = "https://apps.runescape.com/runemetrics/quests?user=";
         private readonly string INVALIDQUESTS = @"{""quests"":[],""loggedIn"":""false""}";
+        private DataTable questsDataTable;
+        private DataTable statsDataTable;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            helper = new Helper();
             if (!IsPostBack)
             {
                 // do something initially
+                MultiView.ActiveViewIndex = 0;
+                
             }
-            userStatsLbl.Text = "";
-            userQuestsLbl.Text = "";
-            statsGridView.Visible = false;
-            questsGridView.Visible = false;
         }
 
         protected void trackBtn_Click(object sender, EventArgs e)
         {
-            helper = new Helper();
+            //helper = new Helper();
             string username = userNameTB.Text;
             
             // get the user's stats
@@ -83,7 +84,7 @@ namespace RSAchievementTracker
          */
         protected void CreateStatsTable(Dictionary<string, long[]> data)
         {
-            DataTable statsDataTable = new DataTable();
+            statsDataTable = new DataTable();
             // creates the columns
             statsDataTable.Columns.AddRange(new DataColumn[4] {
                 new DataColumn("Skill", typeof(string)),
@@ -103,14 +104,12 @@ namespace RSAchievementTracker
                 statsDataTable.Rows.Add(skill, level, exp, hiscore);
             }
 
-            statsGridView.DataSource = statsDataTable;
-            statsGridView.DataBind();
-            statsGridView.Visible = true;
+            ViewState.Add("statsDataTable", statsDataTable);
         }
 
         protected void CreateQuestsTable(List<Quest> quests)
         {
-            DataTable questsDataTable = new DataTable();
+            questsDataTable = new DataTable();
 
             questsDataTable.Columns.AddRange(new DataColumn[5] 
             {
@@ -131,10 +130,30 @@ namespace RSAchievementTracker
                 questsDataTable.Rows.Add(title, difficulty, questPoints, members, status);
             }
 
+            ViewState.Add("questsDataTable", questsDataTable);
+        }
+
+        protected void ShowStats_Click(object sender, EventArgs e)
+        {
+            statsDataTable = (DataTable)ViewState["statsDataTable"];
+            statsGridView.DataSource = statsDataTable;
+            statsGridView.DataBind();
+
+            MultiView.ActiveViewIndex = 1;
+        }
+
+        protected void ShowQuests_Click(object sender, EventArgs e)
+        {
+            questsDataTable = (DataTable)ViewState["questsDataTable"];
             questsGridView.DataSource = questsDataTable;
             questsGridView.DataBind();
-            questsGridView.Visible = true;
 
+            MultiView.ActiveViewIndex = 2;
+        }
+
+        protected void ShowAchievements_Click(object sender, EventArgs e)
+        {
+            MultiView.ActiveViewIndex = 3;
         }
     }
 }
