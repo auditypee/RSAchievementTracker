@@ -52,8 +52,17 @@
                 </asp:GridView>
             </asp:View>
             <asp:View ID="AchievementsView" runat="server">
-                <asp:Button ID="ShowStatsFromAchievements" CssClass="btn btn-primary" runat="server" Text="Show Stats" OnClick="ShowStats_Click" />
-                <asp:Button ID="ShowQuestsFromAchievements" CssClass="btn btn-primary" runat="server" Text="Show Quests" OnClick="ShowQuests_Click" />
+                <h2>Achievements</h2>
+                <div class="row">
+                    <asp:Button ID="ShowStatsFromAchievements" CssClass="btn btn-primary" runat="server" Text="Show Stats" OnClick="ShowStats_Click" />
+                    <asp:Button ID="ShowQuestsFromAchievements" CssClass="btn btn-primary" runat="server" Text="Show Quests" OnClick="ShowQuests_Click" />
+                </div>
+                <div class="row">
+                    <asp:Label ID="achievementsLbl" runat="server"></asp:Label>
+                </div>
+                <asp:GridView ID="achievementsGridView" CssClass="table table-sm table-striped" runat="server">
+
+                </asp:GridView>
             </asp:View>
         </asp:MultiView>
     </form>

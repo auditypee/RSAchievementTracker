@@ -5,8 +5,9 @@ using System.Linq;
 using Newtonsoft.Json;
 using System.Globalization;
 
-namespace AchievementTrackerHelper
+namespace RSAchievementTracker.Domain
 {
+
     public class Helper
     {
         public User CurrentUser { get; private set; }
@@ -63,7 +64,7 @@ namespace AchievementTrackerHelper
         /*
          * Initializes the CurrentUser.Levels from the given jagged array
          */
-        public void CreateLevelsDict(long[][] stats)
+        private void CreateLevelsDict(long[][] stats)
         {
             var levels = CurrentUser.Levels;
             // creates an array from the level dictionary's keys
@@ -85,7 +86,7 @@ namespace AchievementTrackerHelper
 
             CurrentUser.Quests = quests.ListOfQuests.ToList();
         }
-        
+
         /// <summary>
         ///    Formats the given number to include commas between the nth's place
         /// </summary>
@@ -128,7 +129,7 @@ namespace AchievementTrackerHelper
 
             return difficultyString;
         }
-        
+
         /// <summary>
         ///     Converts the quest status to its corresponding string format
         /// </summary>

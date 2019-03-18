@@ -68,6 +68,7 @@
     <Compile Include="Achievement.cs">
       <DependentUpon>AchievementsEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="AchievementObject.cs" />
     <Compile Include="AchievementsEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

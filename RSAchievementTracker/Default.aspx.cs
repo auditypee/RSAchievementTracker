@@ -6,20 +6,24 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 using System.Net;
-using AchievementTrackerHelper;
+using RSAchievementTracker.Domain;
+using RSAchievementTracker.Persistence;
 using System.Data;
 
 namespace RSAchievementTracker
 {
     public partial class Default : Page
     {
-        private Helper helper;
         private readonly string URLSTATS = "https://secure.runescape.com/m=hiscore/index_lite.ws?player=";
         private readonly string URLQUESTS = "https://apps.runescape.com/runemetrics/quests?user=";
         private readonly string INVALIDQUESTS = @"{""quests"":[],""loggedIn"":""false""}";
+
+        private Helper helper;
+        private CheckEligibility ce;
         private DataTable questsDataTable;
         private DataTable statsDataTable;
-
+        private DataTable achievementsTable;
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             helper = new Helper();
@@ -33,7 +37,6 @@ namespace RSAchievementTracker
 
         protected void trackBtn_Click(object sender, EventArgs e)
         {
-            //helper = new Helper();
             string username = userNameTB.Text;
             
             // get the user's stats
@@ -54,12 +57,10 @@ namespace RSAchievementTracker
             {
                 userStatsLbl.Text = string.Format("User \"{0}\" does not exist.", username);
             }
-
             // get the user's quest progress
             try
             {
                 string userQuests = helper.GetUserInfo(URLQUESTS + username);
-                //System.Diagnostics.Debug.Write(userQuests);
 
                 if (userQuests != INVALIDQUESTS)
                 {
@@ -77,6 +78,9 @@ namespace RSAchievementTracker
             {
                 questsGridView.Visible = false;
             }
+
+            ce = new CheckEligibility(helper.CurrentUser);
+            CreateAchievementsTable(ce.AchievementList);
         }
 
         /*
@@ -104,7 +108,7 @@ namespace RSAchievementTracker
                 statsDataTable.Rows.Add(skill, level, exp, hiscore);
             }
 
-            ViewState.Add("statsDataTable", statsDataTable);
+            ViewState.Add("StatsDataTable", statsDataTable);
         }
 
         protected void CreateQuestsTable(List<Quest> quests)
@@ -130,12 +134,50 @@ namespace RSAchievementTracker
                 questsDataTable.Rows.Add(title, difficulty, questPoints, members, status);
             }
 
-            ViewState.Add("questsDataTable", questsDataTable);
+            ViewState.Add("QuestsDataTable", questsDataTable);
+        }
+
+        protected void CreateAchievementsTable(List<AchievementObject> achievements)
+        {
+            achievementsTable = new DataTable();
+
+            achievementsTable.Columns.AddRange(new DataColumn[9]
+            {
+                new DataColumn("Name", typeof(string)),
+                new DataColumn("Members", typeof(string)),
+                new DataColumn("Description", typeof(string)),
+                new DataColumn("Categories", typeof(string)),
+                new DataColumn("Subcategories", typeof(string)),
+                new DataColumn("Quest Requirements", typeof(string)),
+                new DataColumn("Skill Requirements", typeof(string)),
+                new DataColumn("Runescore", typeof(int)),
+                new DataColumn("Eligible", typeof(bool))
+            });
+
+            foreach (var achievement in achievements)
+            {
+                string name = achievement.AName;
+                string description = achievement.ADescription;
+                int runescore = achievement.ARunescore;
+                string members = achievement.AMembers;
+                string categories = string.Join("\n", achievement.ACategories.ToArray());
+                string subcategories = string.Join("\n", achievement.ASubcategories.ToArray());
+                string questReqs = string.Join("\n", achievement.AQuestReqs.ToArray());
+                string skillReqs = "";
+                foreach (var skillReq in achievement.ASkillReqs)
+                    skillReqs += string.Format("{0} {1}\n", skillReq.Item1, skillReq.Item2);
+                string eligible = achievement.AEligible.ToString();
+
+                achievementsTable.Rows.Add(name, members, description, categories,
+                    subcategories, questReqs, skillReqs, runescore, eligible);
+            }
+
+            ViewState.Add("AchievementsTable", achievementsTable);
         }
 
         protected void ShowStats_Click(object sender, EventArgs e)
         {
-            statsDataTable = (DataTable)ViewState["statsDataTable"];
+            statsDataTable = (DataTable)ViewState["StatsDataTable"];
             statsGridView.DataSource = statsDataTable;
             statsGridView.DataBind();
 
@@ -144,7 +186,7 @@ namespace RSAchievementTracker
 
         protected void ShowQuests_Click(object sender, EventArgs e)
         {
-            questsDataTable = (DataTable)ViewState["questsDataTable"];
+            questsDataTable = (DataTable)ViewState["QuestsDataTable"];
             questsGridView.DataSource = questsDataTable;
             questsGridView.DataBind();
 
@@ -153,7 +195,13 @@ namespace RSAchievementTracker
 
         protected void ShowAchievements_Click(object sender, EventArgs e)
         {
+            achievementsTable = (DataTable)ViewState["AchievementsTable"];
+            achievementsGridView.DataSource = achievementsTable;
+            achievementsGridView.DataBind();
+
             MultiView.ActiveViewIndex = 3;
         }
+
+        
     }
 }

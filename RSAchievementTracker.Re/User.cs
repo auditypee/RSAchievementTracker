@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace AchievementTrackerHelper
+// TODO: - Should add a "Quest Points" total in Levels
+namespace RSAchievementTracker.Domain
 {
+    [Serializable]
     public class User
     {
         public Dictionary<string, long[]> Levels { get; private set; }
@@ -29,12 +31,14 @@ namespace AchievementTrackerHelper
         }
     }
     
+    [Serializable]
     public struct Quests
     {
         [JsonProperty(PropertyName = "quests")]
         public Quest[] ListOfQuests { get; set; }
     }
 
+    [Serializable]
     public struct Quest
     {
         // PropertyName assures json is being read correctly

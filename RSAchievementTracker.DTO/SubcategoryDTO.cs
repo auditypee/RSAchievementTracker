@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RSAchievementTracker.Persistence
+namespace RSAchievementTracker.DTO
 {
-    public class DatabaseHelper
+    class SubcategoryDTO
     {
 
     }
