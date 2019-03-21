@@ -28,6 +28,7 @@ namespace RSAchievementTracker.Persistence
         public string Description { get; set; }
         public int Runescore { get; set; }
         public string Members { get; set; }
+        public string Link { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QuestReq> QuestReqs { get; set; }

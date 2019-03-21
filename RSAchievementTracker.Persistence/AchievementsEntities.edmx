@@ -9,11 +9,12 @@
           <Key>
             <PropertyRef Name="AchievementId" />
           </Key>
-          <Property Name="AchievementId" Type="int" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AchievementId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Description" Type="varchar(max)" />
           <Property Name="Runescore" Type="int" Nullable="false" />
           <Property Name="Members" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Link" Type="varchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <EntityType Name="AchievementsCategories">
           <Key>
@@ -42,15 +43,15 @@
           <Key>
             <PropertyRef Name="QuestReqId" />
           </Key>
-          <Property Name="QuestReqId" Type="int" Nullable="false" />
-          <Property Name="Quest" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="QuestReqId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Quest" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="AchievementId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="SkillReq">
           <Key>
             <PropertyRef Name="SkillsReqId" />
           </Key>
-          <Property Name="SkillsReqId" Type="int" Nullable="false" />
+          <Property Name="SkillsReqId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Skill" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Level" Type="int" Nullable="false" />
           <Property Name="AchievementId" Type="int" Nullable="false" />
@@ -193,11 +194,12 @@
           <Key>
             <PropertyRef Name="AchievementId" />
           </Key>
-          <Property Name="AchievementId" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AchievementId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Runescore" Type="Int32" Nullable="false" />
           <Property Name="Members" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Link" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="QuestReqs" Relationship="Self.FK_QuestReq_ToAchievement" FromRole="Achievement" ToRole="QuestReq" />
           <NavigationProperty Name="SkillReqs" Relationship="Self.FK_SkillReq_ToAchievement" FromRole="Achievement" ToRole="SkillReq" />
           <NavigationProperty Name="Categories" Relationship="Self.AchievementsCategories" FromRole="Achievement" ToRole="Category" />
@@ -216,8 +218,8 @@
           <Key>
             <PropertyRef Name="QuestReqId" />
           </Key>
-          <Property Name="QuestReqId" Type="Int32" Nullable="false" />
-          <Property Name="Quest" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="QuestReqId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Quest" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AchievementId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Achievement" Relationship="Self.FK_QuestReq_ToAchievement" FromRole="QuestReq" ToRole="Achievement" />
         </EntityType>
@@ -225,7 +227,7 @@
           <Key>
             <PropertyRef Name="SkillsReqId" />
           </Key>
-          <Property Name="SkillsReqId" Type="Int32" Nullable="false" />
+          <Property Name="SkillsReqId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Skill" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Level" Type="Int32" Nullable="false" />
           <Property Name="AchievementId" Type="Int32" Nullable="false" />
@@ -326,6 +328,7 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Runescore" ColumnName="Runescore" />
                 <ScalarProperty Name="Members" ColumnName="Members" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

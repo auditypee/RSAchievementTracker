@@ -4,12 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e90601a2adda409fa4cb89966d146c78" Name="Diagram1">
-        <EntityTypeShape EntityType="AchievementsDatabaseModel.Achievement" Width="1.5" PointX="5.125" PointY="3.25" IsExpanded="true" />
+      <Diagram DiagramId="736b9f5c76b74346a51b891676494987" Name="Diagram1">
+        <EntityTypeShape EntityType="AchievementsDatabaseModel.Achievement" Width="1.5" PointX="5" PointY="3.25" IsExpanded="true" />
         <EntityTypeShape EntityType="AchievementsDatabaseModel.Category" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="AchievementsDatabaseModel.QuestReq" Width="1.5" PointX="7.125" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AchievementsDatabaseModel.QuestReq" Width="1.5" PointX="6.875" PointY="6.625" IsExpanded="true" />
         <EntityTypeShape EntityType="AchievementsDatabaseModel.SkillReq" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="AchievementsDatabaseModel.Subcategory" Width="1.5" PointX="7" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AchievementsDatabaseModel.Subcategory" Width="1.5" PointX="7" PointY="1.125" IsExpanded="true" />
         <AssociationConnector Association="AchievementsDatabaseModel.FK_QuestReq_ToAchievement" ManuallyRouted="false" />
         <AssociationConnector Association="AchievementsDatabaseModel.FK_SkillReq_ToAchievement" ManuallyRouted="false" />
         <AssociationConnector Association="AchievementsDatabaseModel.FK_Subcategory_ToCategory" ManuallyRouted="false" />

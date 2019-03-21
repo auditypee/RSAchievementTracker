@@ -43,9 +43,12 @@ namespace RSAchievementTracker.Domain
             }
 
             // if users completed quest list doesn't contain a quest requirement, false
-            foreach (var test in aQuestReqs)
+            foreach (var aQuestReq in aQuestReqs)
             {
-                if (!usersQuests.Contains(test))
+                string replacedString = aQuestReq;
+                if (aQuestReq.Contains("(partial)"))
+                    replacedString = aQuestReq.Replace(" (partial)", "");
+                if (!usersQuests.Contains(replacedString))
                     return false;
             }
 

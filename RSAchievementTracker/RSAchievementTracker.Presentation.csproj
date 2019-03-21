@@ -81,10 +81,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\AchievementsDatabase.mdf" />
-    <Content Include="App_Data\AchievementsDatabase_log.ldf">
-      <DependentUpon>AchievementsDatabase.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -174,6 +170,9 @@
       <Project>{4df40210-1b0a-4510-937d-b40de46d0580}</Project>
       <Name>RSAchievementTracker.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
