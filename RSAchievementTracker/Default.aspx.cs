@@ -26,17 +26,18 @@ namespace RSAchievementTracker
         
         protected void Page_Load(object sender, EventArgs e)
         {
-            helper = new Helper();
             if (!IsPostBack)
             {
                 // do something initially
                 MultiView.ActiveViewIndex = 0;
-                
+                GetDatabaseItems db = new GetDatabaseItems();
+                CreateAchievementsTable(db.AchievementsList);
             }
         }
 
         protected void trackBtn_Click(object sender, EventArgs e)
         {
+            helper = new Helper();
             string username = userNameTB.Text;
             
             // get the user's stats
@@ -78,9 +79,9 @@ namespace RSAchievementTracker
             {
                 questsGridView.Visible = false;
             }
-
+            // TODO: - DATA SORTABLE
             ce = new CheckEligibility(helper.CurrentUser);
-            CreateAchievementsTable(ce.AchievementList);
+            CreateAchievementsTable(ce.AchievementsList);
         }
 
         /*
@@ -178,17 +179,32 @@ namespace RSAchievementTracker
         protected void ShowStats_Click(object sender, EventArgs e)
         {
             statsDataTable = (DataTable)ViewState["StatsDataTable"];
-            statsGridView.DataSource = statsDataTable;
-            statsGridView.DataBind();
+            if (statsDataTable != null)
+            {
+                statsGridView.DataSource = statsDataTable;
+                statsGridView.DataBind();
+            }
+            else
+            {
+                userStatsLbl.Text = "Please input username.";
+            }
 
             MultiView.ActiveViewIndex = 1;
+            
         }
 
         protected void ShowQuests_Click(object sender, EventArgs e)
         {
             questsDataTable = (DataTable)ViewState["QuestsDataTable"];
-            questsGridView.DataSource = questsDataTable;
-            questsGridView.DataBind();
+            if (questsDataTable != null)
+            {
+                questsGridView.DataSource = questsDataTable;
+                questsGridView.DataBind();
+            }
+            else
+            {
+                userQuestsLbl.Text = "Please input username.";
+            }
 
             MultiView.ActiveViewIndex = 2;
         }

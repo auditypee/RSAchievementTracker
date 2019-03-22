@@ -10,20 +10,20 @@ namespace RSAchievementTracker.Domain
     public class CheckEligibility
     {
         public User CurrentUser { get; set; }
-        public List<AchievementObject> AchievementList { get; set; }
+        public List<AchievementObject> AchievementsList { get; set; }
 
         public CheckEligibility(User user)
         {
             CurrentUser = user;
 
             GetDatabaseItems databaseItems = new GetDatabaseItems();
-            AchievementList = databaseItems.GetAchievements();
+            AchievementsList = databaseItems.AchievementsList;
             Eligibility();
         }
         
         private void Eligibility()
         {
-            foreach (var achievement in AchievementList)
+            foreach (var achievement in AchievementsList)
             {
                 bool eligible = CompareQuests(achievement) && CompareSkillLevels(achievement);
 
@@ -64,7 +64,7 @@ namespace RSAchievementTracker.Domain
             {
                 if (usersSkills.ContainsKey(aSkillReq.Item1))
                 {
-                    int i = (int)usersSkills[aSkillReq.Item1].ElementAt(2);
+                    int i = (int)usersSkills[aSkillReq.Item1].ElementAt(1);
                     if (i < aSkillReq.Item2)
                         return false;
                 }

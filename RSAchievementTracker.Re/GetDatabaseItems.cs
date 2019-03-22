@@ -7,7 +7,14 @@ namespace RSAchievementTracker.Domain
 {
     public class GetDatabaseItems
     {
-        public List<AchievementObject> GetAchievements()
+        public List<AchievementObject> AchievementsList { get; set; }
+
+        public GetDatabaseItems()
+        {
+            AchievementsList = GetAchievements();
+        }
+
+        private List<AchievementObject> GetAchievements()
         {
             AchievementsDatabaseEntities db = new AchievementsDatabaseEntities();
 
