@@ -154,6 +154,7 @@
                                                 Minigames
                                             </h4>
                                         </a>
+                                        <asp:Button ID="MinigamesButton" runat="server" Text="Button" OnClick="MinigamesButton_Click" />
                                     </div>
                                     <div class="collapse" id="collapseMinigames" aria-labelledby="aMinigames" data-parent="#categories">
                                         <div class="card-body btn-group-vertical btn-group-sm">

@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 using System.Net;
 using RSAchievementTracker.Domain;
-using RSAchievementTracker.Persistence;
+using RSAchievementTracker.DTO;
 using System.Data;
 
 namespace RSAchievementTracker
@@ -30,8 +30,8 @@ namespace RSAchievementTracker
             {
                 // do something initially
                 MultiView.ActiveViewIndex = 0;
-                GetDatabaseItems db = new GetDatabaseItems();
-                CreateAchievementsTable(db.AchievementsList);
+
+                CreateAchievementsTable(GetAchievements.GetAllAchievements());
             }
         }
 
@@ -44,7 +44,7 @@ namespace RSAchievementTracker
             try
             {
                 // gets the website's contents
-                string userStats = helper.GetUserInfo(URLSTATS + username);
+                string userStats = Helper.GetUserInfo(URLSTATS + username);
 
                 // populates the table's data from the string
                 helper.PopulateStatsData(userStats);
@@ -61,7 +61,7 @@ namespace RSAchievementTracker
             // get the user's quest progress
             try
             {
-                string userQuests = helper.GetUserInfo(URLQUESTS + username);
+                string userQuests = Helper.GetUserInfo(URLQUESTS + username);
 
                 if (userQuests != INVALIDQUESTS)
                 {
@@ -103,8 +103,8 @@ namespace RSAchievementTracker
             {
                 string skill = kvp.Key;
                 long level = kvp.Value.ElementAt(1);
-                string exp = helper.NumberFormat(kvp.Value.ElementAt(2));
-                string hiscore = helper.NumberFormat(kvp.Value.ElementAt(0));
+                string exp = NumberFormat(kvp.Value.ElementAt(2));
+                string hiscore = NumberFormat(kvp.Value.ElementAt(0));
 
                 statsDataTable.Rows.Add(skill, level, exp, hiscore);
             }
@@ -128,10 +128,10 @@ namespace RSAchievementTracker
             foreach (var quest in quests)
             {
                 string title = quest.Title;
-                string difficulty = helper.ConvertDifficulty(quest.Difficulty);
+                string difficulty = quest.DifficultyString();
                 string questPoints = quest.QuestPoints.ToString();
                 string members = quest.Members.ToString();
-                string status = helper.ConvertStatus(quest.Status, quest.Eligible);
+                string status = quest.StatusString();
                 questsDataTable.Rows.Add(title, difficulty, questPoints, members, status);
             }
 
@@ -218,6 +218,23 @@ namespace RSAchievementTracker
             MultiView.ActiveViewIndex = 3;
         }
 
-        
+        /// <summary>
+        ///    Formats the given number to include commas between the nth's place
+        /// </summary>
+        /// <param name="num">the number to format</param>
+        /// <returns>the formatted number (x,xxx,xxx)</returns>
+        private string NumberFormat(long num)
+        {
+            return string.Format("{0:#,0}", num);
+        }
+
+        protected void MinigamesButton_Click(object sender, EventArgs e)
+        {
+            CreateAchievementsTable(GetAchievements.GetCategoryAchievements("Minigames"));
+            achievementsGridView.DataSource = achievementsTable;
+            achievementsGridView.DataBind();
+
+            MultiView.ActiveViewIndex = 3;
+        }
     }
 }

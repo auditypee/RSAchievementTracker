@@ -55,10 +55,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CheckEligibility.cs" />
-    <Compile Include="GetDatabaseItems.cs" />
+    <Compile Include="GetAchievements.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RSAchievementTracker.DTO\RSAchievementTracker.DTO.csproj">

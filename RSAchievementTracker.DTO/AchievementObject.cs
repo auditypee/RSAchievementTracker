@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RSAchievementTracker.Persistence
+namespace RSAchievementTracker.DTO
 {
     [Serializable]
     public class AchievementObject

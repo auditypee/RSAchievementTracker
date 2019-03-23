@@ -3,7 +3,7 @@ using System.Net;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
-using System.Globalization;
+using RSAchievementTracker.DTO;
 
 namespace RSAchievementTracker.Domain
 {
@@ -19,7 +19,7 @@ namespace RSAchievementTracker.Domain
         }
 
         // get the user's information (stats from hiscores and quests from quests api)
-        public string GetUserInfo(string url)
+        public static string GetUserInfo(string url)
         {
             string info = "";
             using (WebClient webClient = new WebClient())
@@ -86,63 +86,6 @@ namespace RSAchievementTracker.Domain
 
             CurrentUser.Quests = quests.ListOfQuests.ToList();
         }
-
-        /// <summary>
-        ///    Formats the given number to include commas between the nth's place
-        /// </summary>
-        /// <param name="num">the number to format</param>
-        /// <returns>the formatted number (x,xxx,xxx)</returns>
-        public string NumberFormat(long num)
-        {
-            return string.Format("{0:#,0}", num);
-        }
-
-        /// <summary>
-        ///    Converts the numbered difficulty to its corresponding string format
-        /// </summary>
-        /// <param name="difficultyNum">The numbered difficulty is changed to a string</param>
-        /// <returns>the converted difficulty string</returns>
-        public string ConvertDifficulty(int difficultyNum)
-        {
-            string difficultyString = "";
-            switch (difficultyNum)
-            {
-                case 0:
-                    difficultyString = "Novice";
-                    break;
-                case 1:
-                    difficultyString = "Intermediate";
-                    break;
-                case 2:
-                    difficultyString = "Experienced";
-                    break;
-                case 3:
-                    difficultyString = "Master";
-                    break;
-                case 4:
-                    difficultyString = "Grandmaster";
-                    break;
-                case 250:
-                    difficultyString = "Special";
-                    break;
-            }
-
-            return difficultyString;
-        }
-
-        /// <summary>
-        ///     Converts the quest status to its corresponding string format
-        /// </summary>
-        /// <param name="status">the current state the user is in during the quest</param>
-        /// <param name="userEligible">if the user is currently able to do this quest or not</param>
-        /// <returns>title case version of the string status (or Not Eligible depending on the boolean)</returns>
-        public string ConvertStatus(string status, bool userEligible)
-        {
-            if (!userEligible)
-                return "Not Eligible";
-            
-            // changes status to Title Case and removes underscore
-            return new CultureInfo("en-US", false).TextInfo.ToTitleCase(status.ToLower().Replace("_", " "));
-        }
+        
     }
 }

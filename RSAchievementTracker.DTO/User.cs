@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
+using System.Globalization;
 
 // TODO: - Should add a "Quest Points" total in Levels
-namespace RSAchievementTracker.Domain
+namespace RSAchievementTracker.DTO
 {
     [Serializable]
     public class User
@@ -30,15 +31,14 @@ namespace RSAchievementTracker.Domain
             Quests = new List<Quest>();
         }
     }
-    
+
     [Serializable]
     public struct Quests
     {
         [JsonProperty(PropertyName = "quests")]
         public Quest[] ListOfQuests { get; set; }
     }
-
-    [Serializable]
+    
     public struct Quest
     {
         // PropertyName assures json is being read correctly
@@ -46,7 +46,7 @@ namespace RSAchievementTracker.Domain
         public string Title { get; private set; }
 
         [JsonProperty(PropertyName = "difficulty")]
-        public int Difficulty { get; private set; }
+        private int Difficulty { get; set; }
 
         [JsonProperty(PropertyName = "questPoints")]
         public int QuestPoints { get; private set; }
@@ -60,5 +60,43 @@ namespace RSAchievementTracker.Domain
         [JsonProperty(PropertyName = "userEligible")]
         public bool Eligible { get; private set; }
         
+        // converts difficulty into a readable string
+        public string DifficultyString()
+        {
+            int difficultyNum = Difficulty;
+            string difficultyString = "";
+            switch (difficultyNum)
+            {
+                case 0:
+                    difficultyString = "Novice";
+                    break;
+                case 1:
+                    difficultyString = "Intermediate";
+                    break;
+                case 2:
+                    difficultyString = "Experienced";
+                    break;
+                case 3:
+                    difficultyString = "Master";
+                    break;
+                case 4:
+                    difficultyString = "Grandmaster";
+                    break;
+                case 250:
+                    difficultyString = "Special";
+                    break;
+            }
+
+            return difficultyString;
+        }
+
+        public string StatusString()
+        {
+            if (!Eligible)
+                return "Not Eligible";
+
+            // changes status to Title Case and removes underscore
+            return new CultureInfo("en-US", false).TextInfo.ToTitleCase(Status.ToLower().Replace("_", " "));
+        }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RSAchievementTracker.Persistence;
+using RSAchievementTracker.DTO;
 
 namespace RSAchievementTracker.Domain
 {
@@ -15,9 +16,8 @@ namespace RSAchievementTracker.Domain
         public CheckEligibility(User user)
         {
             CurrentUser = user;
-
-            GetDatabaseItems databaseItems = new GetDatabaseItems();
-            AchievementsList = databaseItems.AchievementsList;
+            
+            AchievementsList = GetDatabaseItems.GetAllAchievements();
             Eligibility();
         }
         

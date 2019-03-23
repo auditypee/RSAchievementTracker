@@ -162,9 +162,9 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RSAchievementTracker.Persistence\RSAchievementTracker.Persistence.csproj">
-      <Project>{af179a54-d272-43d4-a8c7-8cc0a5105ed1}</Project>
-      <Name>RSAchievementTracker.Persistence</Name>
+    <ProjectReference Include="..\RSAchievementTracker.DTO\RSAchievementTracker.DTO.csproj">
+      <Project>{d4054e8d-232d-422a-9c0f-361a728fdceb}</Project>
+      <Name>RSAchievementTracker.DTO</Name>
     </ProjectReference>
     <ProjectReference Include="..\RSAchievementTracker.Re\RSAchievementTracker.Domain.csproj">
       <Project>{4df40210-1b0a-4510-937d-b40de46d0580}</Project>

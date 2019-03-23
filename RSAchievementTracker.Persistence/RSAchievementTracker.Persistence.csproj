@@ -68,7 +68,6 @@
     <Compile Include="Achievement.cs">
       <DependentUpon>AchievementsEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="AchievementObject.cs" />
     <Compile Include="AchievementsEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -88,6 +87,7 @@
       <DependentUpon>AchievementsEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DatabaseHelper.cs" />
+    <Compile Include="GetDatabaseItems.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuestReq.cs">
       <DependentUpon>AchievementsEntities.tt</DependentUpon>
@@ -136,6 +136,12 @@
       <DependentUpon>AchievementsEntities.edmx</DependentUpon>
       <LastGenOutput>AchievementsEntities.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RSAchievementTracker.DTO\RSAchievementTracker.DTO.csproj">
+      <Project>{d4054e8d-232d-422a-9c0f-361a728fdceb}</Project>
+      <Name>RSAchievementTracker.DTO</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
