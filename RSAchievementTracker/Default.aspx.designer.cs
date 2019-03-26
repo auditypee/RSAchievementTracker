@@ -76,13 +76,13 @@ namespace RSAchievementTracker {
         protected global::System.Web.UI.WebControls.Button ShowQuests;
         
         /// <summary>
-        /// ShowAchievements control.
+        /// Button1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ShowAchievements;
+        protected global::System.Web.UI.WebControls.Button Button1;
         
         /// <summary>
         /// StatsView control.
@@ -101,15 +101,6 @@ namespace RSAchievementTracker {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ShowQuestsFromStats;
-        
-        /// <summary>
-        /// ShowAchievementsFromStats control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ShowAchievementsFromStats;
         
         /// <summary>
         /// userStatsLbl control.
@@ -148,15 +139,6 @@ namespace RSAchievementTracker {
         protected global::System.Web.UI.WebControls.Button ShowStatsFromQuests;
         
         /// <summary>
-        /// ShowAchievementsFromQuests control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ShowAchievementsFromQuests;
-        
-        /// <summary>
         /// userQuestsLbl control.
         /// </summary>
         /// <remarks>
@@ -173,59 +155,5 @@ namespace RSAchievementTracker {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView questsGridView;
-        
-        /// <summary>
-        /// AchievementsView control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.View AchievementsView;
-        
-        /// <summary>
-        /// ShowStatsFromAchievements control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ShowStatsFromAchievements;
-        
-        /// <summary>
-        /// ShowQuestsFromAchievements control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ShowQuestsFromAchievements;
-        
-        /// <summary>
-        /// achievementsLbl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label achievementsLbl;
-        
-        /// <summary>
-        /// MinigamesButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button MinigamesButton;
-        
-        /// <summary>
-        /// achievementsGridView control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView achievementsGridView;
     }
 }

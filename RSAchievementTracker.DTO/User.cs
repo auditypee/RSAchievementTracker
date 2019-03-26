@@ -39,6 +39,7 @@ namespace RSAchievementTracker.DTO
         public Quest[] ListOfQuests { get; set; }
     }
     
+    [Serializable]
     public struct Quest
     {
         // PropertyName assures json is being read correctly

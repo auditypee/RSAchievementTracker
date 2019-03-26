@@ -49,6 +49,27 @@ namespace RSAchievementTracker.Persistence
             return categoryAchievements;
         }
 
+        public static List<AchievementObject> GetSubCategoryAchievements(string subcategory)
+        {
+            List<AchievementObject> subcategoryAchievements = new List<AchievementObject>();
+
+            using (var db = new AchievementsDatabaseEntities())
+            {
+                var achievements = from a in db.Achievements
+                                   where a.Subcategories.Any(s => s.Name == subcategory)
+                                   select a;
+
+                foreach (var achievement in achievements)
+                {
+                    var achievementObject = ConvertToAchObj(achievement);
+
+                    subcategoryAchievements.Add(achievementObject);
+                }
+            }
+
+            return subcategoryAchievements;
+        }
+
         private static AchievementObject ConvertToAchObj(Achievement achievement)
         {
             string name = achievement.Name;

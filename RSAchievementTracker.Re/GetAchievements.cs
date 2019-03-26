@@ -10,30 +10,19 @@ namespace RSAchievementTracker.Domain
 {
     public class GetAchievements
     {
-        public List<AchievementObject> AllAchievements { get; set; }
-        public List<AchievementObject> SkillsAchievements { get; set; }
-        public List<AchievementObject> ExplorationAchievements { get; set; }
-        public List<AchievementObject> CombatAchievements { get; set; }
-        public List<AchievementObject> CompletionistAchievements { get; set; }
-        public List<AchievementObject> MiscellaneousAchievements { get; set; }
-        public List<AchievementObject> MinigamesAchievements { get; set; }
-        
         public static List<AchievementObject> GetAllAchievements()
         {
-            List<AchievementObject> allAchievements = new List<AchievementObject>();
-
-            allAchievements = GetDatabaseItems.GetAllAchievements();
-
-            return allAchievements;
+            return GetDatabaseItems.GetAllAchievements();
         }
         
         public static List<AchievementObject> GetCategoryAchievements(string category)
         {
-            List<AchievementObject> categoryAchievements = new List<AchievementObject>();
+            return GetDatabaseItems.GetCategoryAchievements(category);
+        }
 
-            categoryAchievements = GetDatabaseItems.GetCategoryAchievements(category);
-
-            return categoryAchievements;
+        public static List<AchievementObject> GetSubcategoryAchievements(string subcategory)
+        {
+            return GetDatabaseItems.GetSubCategoryAchievements(subcategory);
         }
     }
 }
