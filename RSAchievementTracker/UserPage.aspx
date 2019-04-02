@@ -38,7 +38,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <asp:Label ID="UsernameHeader" runat="server" CssClass="display-1" Text=""></asp:Label>
             </div>
@@ -192,7 +192,8 @@
                                         <asp:UpdatePanel ID="ClansUpdatePanel" runat="server">
                                             <ContentTemplate>
                                                 <div class="btn-group-vertical btn-group-sm btn-block">
-                                                    <asp:Button ID="Clans" CssClass="btn btn-light" runat="server" Text="All" OnClick="CategoriesBtn_Click" />
+                                                    <asp:Button ID="Miscellaneous" CssClass="btn btn-light" runat="server" Text="All" OnClick="CategoriesBtn_Click" />
+                                                    <asp:Button ID="ClansBtn" CssClass="btn btn-dark" runat="server" Text="Clans" OnClick="SubcategoriesBtn_Click" />
                                                     <asp:Button ID="FeatsBtn" CssClass="btn btn-dark" runat="server" Text="Feats" OnClick="SubcategoriesBtn_Click" />
                                                     <asp:Button ID="MiniquestsBtn" CssClass="btn btn-light" runat="server" Text="Miniquests" OnClick="SubcategoriesBtn_Click" />
                                                     <asp:Button ID="ReputationBtn" CssClass="btn btn-dark" runat="server" Text="Reputation" OnClick="SubcategoriesBtn_Click" />
@@ -223,14 +224,38 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-8">
+                        <div class="col">
                             <asp:UpdatePanel ID="AchievementsUpdatePanel" runat="server" UpdateMode="Conditional">
                                 <Triggers>
                                     <asp:AsyncPostBackTrigger ControlID="Skills" EventName="Click" />
                                     <asp:AsyncPostBackTrigger ControlID="Exploration" EventName="Click" />
                                 </Triggers>
                                 <ContentTemplate>
-                                    <asp:GridView ID="achievementsGridView" CssClass="table table-sm table-striped" runat="server"></asp:GridView>
+                                    <asp:GridView ID="achievementsGridView" CssClass="table table-sm table-striped" 
+                                        runat="server" AutoGenerateColumns="false"
+                                        OnRowDataBound="AchievementsGridView_RowDataBound">
+                                        <Columns>
+                                            <asp:BoundField DataField="AchName" HeaderText="Name"/>
+                                            <asp:BoundField DataField="AchMembers" HeaderText="Members"/>
+                                            <asp:BoundField DataField="AchDescription" HeaderText="Description"/>
+                                            <asp:TemplateField HeaderText="Quest Requirements">
+                                                <ItemTemplate>
+                                                    <asp:BulletedList ID="AchQuestReqsBL" runat="server">
+
+                                                    </asp:BulletedList>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Skill Requirements" ItemStyle-Width="200px">
+                                                <ItemTemplate>
+                                                    <asp:BulletedList ID="AchSkillReqsBL" runat="server">
+
+                                                    </asp:BulletedList>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:BoundField DataField="AchRunescore" HeaderText="Runescore" />
+                                            <asp:BoundField DataField="AchEligible" HeaderText="Eligible" />
+                                        </Columns>
+                                    </asp:GridView>
                                 </ContentTemplate>
                             </asp:UpdatePanel>
                         </div>

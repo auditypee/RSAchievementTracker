@@ -643,13 +643,22 @@ namespace RSAchievementTracker {
         protected global::System.Web.UI.UpdatePanel ClansUpdatePanel;
         
         /// <summary>
-        /// Clans control.
+        /// Miscellaneous control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Clans;
+        protected global::System.Web.UI.WebControls.Button Miscellaneous;
+        
+        /// <summary>
+        /// ClansBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ClansBtn;
         
         /// <summary>
         /// FeatsBtn control.

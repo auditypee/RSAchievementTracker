@@ -9,6 +9,7 @@ using System.Net;
 using RSAchievementTracker.Domain;
 using RSAchievementTracker.DTO;
 using System.Data;
+using System.Web.UI.HtmlControls;
 
 namespace RSAchievementTracker
 {
@@ -134,26 +135,21 @@ namespace RSAchievementTracker
         protected void CreateAchievementsTable(List<AchievementObject> achievements)
         {
             achievementsTable = new DataTable();
-
+            
             achievementsTable.Columns.AddRange(new DataColumn[7]
             {
-                new DataColumn("Name", typeof(string)),
-                new DataColumn("Members", typeof(string)),
-                new DataColumn("Description", typeof(string)),
-                new DataColumn("Quest Requirements", typeof(string)),
-                new DataColumn("Skill Requirements", typeof(string)),
-                new DataColumn("Runescore", typeof(int)),
-                new DataColumn("Eligible", typeof(bool))
+                new DataColumn("AchName", typeof(string)),
+                new DataColumn("AchMembers", typeof(string)),
+                new DataColumn("AchDescription", typeof(string)),
+                new DataColumn("AchQuestReq", typeof(string)),
+                new DataColumn("AchSkillReq", typeof(string)),
+                new DataColumn("AchRunescore", typeof(int)),
+                new DataColumn("AchEligible", typeof(bool))
             });
-
+            
             User currentUser = (User)ViewState["User"];
             if (currentUser != null)
-            {
                 achievements = CheckEligibility.Eligibility(currentUser, achievements);
-            }
-            if (currentUser == null)
-                System.Diagnostics.Debug.WriteLine("currentUser is null");
-
 
             foreach (var achievement in achievements)
             {
@@ -161,17 +157,46 @@ namespace RSAchievementTracker
                 string description = achievement.ADescription;
                 int runescore = achievement.ARunescore;
                 string members = achievement.AMembers;
-                string questReqs = string.Join(@"\n", achievement.AQuestReqs.ToArray());
+                string eligible = achievement.AEligible.ToString();
+                
+                string questReqs = string.Join("|", achievement.AQuestReqs.ToArray());
                 string skillReqs = "";
                 foreach (var skillReq in achievement.ASkillReqs)
-                    skillReqs += string.Format("{0} {1}\n", skillReq.Item1, skillReq.Item2);
-                string eligible = achievement.AEligible.ToString();
+                    skillReqs += string.Format("{0} {1}|", skillReq.Item2, skillReq.Item1);
 
                 achievementsTable.Rows.Add(name, members, description,
                     questReqs, skillReqs, runescore, eligible);
             }
 
             ViewState.Add("AchievementsTable", achievementsTable);
+        }
+
+        protected void AchievementsGridView_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                BulletedList questReqBL = (BulletedList)e.Row.FindControl("AchQuestReqsBL");
+                BulletedList skillReqBL = (BulletedList)e.Row.FindControl("AchSkillReqsBL");
+
+                List<string> qr = ((DataRowView)e.Row.DataItem)["AchQuestReq"].ToString().Split('|').ToList();
+                List<string> sr = ((DataRowView)e.Row.DataItem)["AchSkillReq"].ToString().Split('|').ToList();
+
+                qr = RemoveEmpty(qr);
+                sr = RemoveEmpty(sr);
+
+                questReqBL.DataSource = qr;
+                questReqBL.DataBind();
+
+                skillReqBL.DataSource = sr;
+                skillReqBL.DataBind();
+            }
+        }
+
+        private List<string> RemoveEmpty(List<string> list)
+        {
+            list = list.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct().ToList();
+
+            return list;
         }
 
         protected void CategoriesBtn_Click(object sender, EventArgs e)

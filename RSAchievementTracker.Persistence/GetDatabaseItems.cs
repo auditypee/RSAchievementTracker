@@ -101,7 +101,7 @@ namespace RSAchievementTracker.Persistence
                 Tuple<string, int> skillLevel = new Tuple<string, int>(ski.Skill, ski.Level);
                 skillReqs.Add(skillLevel);
             }
-
+            
             AchievementObject achievementObject = new AchievementObject(
                 name, description, runescore, members, categories,
                 subcategories, questReqs, skillReqs

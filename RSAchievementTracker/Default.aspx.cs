@@ -52,10 +52,6 @@ namespace RSAchievementTracker
                 UsernameLbl.Text = username + " does not exist or is not a valid username.";
                 WebErrorLbl.Text = we.Message;
             }
-            
-
-
-            
         }
         
     }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RSAchievementTracker.Persistence;
 using RSAchievementTracker.DTO;
+using System.Text.RegularExpressions;
 
 namespace RSAchievementTracker.Domain
 {
@@ -37,9 +38,11 @@ namespace RSAchievementTracker.Domain
             foreach (var aQuestReq in aQuestReqs)
             {
                 string replacedString = aQuestReq;
-                if (aQuestReq.Contains("(partial)"))
-                    replacedString = aQuestReq.Replace(" (partial)", "");
-                if (!usersQuests.Contains(replacedString))
+
+                if (Regex.IsMatch(aQuestReq, @"\(.*\)"))
+                    replacedString = Regex.Replace(aQuestReq, @"\s+\(.*\)", string.Empty);
+
+                if (!usersQuests.Any(s => s.Equals(replacedString, StringComparison.OrdinalIgnoreCase)))
                     return false;
             }
 
