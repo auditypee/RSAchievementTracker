@@ -14,18 +14,15 @@ namespace RSAchievementTracker.Domain
         public static List<AchievementObject> Eligibility(User currentUser, List<AchievementObject> achievementsList)
         {
             foreach (var achievement in achievementsList)
-            {
-                bool eligible = CompareQuests(currentUser, achievement) && CompareSkillLevels(currentUser, achievement);
-
-                achievement.AEligible = eligible;
-            }
+                achievement.AEligible = CompareQuests(currentUser, achievement) && CompareSkillLevels(currentUser, achievement);
 
             return achievementsList;
         }
 
         private static bool CompareQuests(User currentUser, AchievementObject achievement)
         {
-            List<string> aQuestReqs = achievement.AQuestReqs;
+            bool eligible = true;
+            List<AQuestReq> aQuestReqs = achievement.AQuestReqs;
             List<string> usersQuests = new List<string>();
             foreach (var uq in currentUser.Quests)
             {
@@ -34,39 +31,45 @@ namespace RSAchievementTracker.Domain
                     usersQuests.Add(uq.Title);
             }
 
-            // if users completed quest list doesn't contain a quest requirement, false
+            // if user's completed quest list doesn't contain a quest requirement, false
             foreach (var aQuestReq in aQuestReqs)
             {
-                string replacedString = aQuestReq;
+                string replacedString = aQuestReq.Quest;
 
-                if (Regex.IsMatch(aQuestReq, @"\(.*\)"))
-                    replacedString = Regex.Replace(aQuestReq, @"\s+\(.*\)", string.Empty);
+                if (Regex.IsMatch(aQuestReq.Quest, @"\(.*\)"))
+                    replacedString = Regex.Replace(aQuestReq.Quest, @"\s+\(.*\)", string.Empty);
 
-                if (!usersQuests.Any(s => s.Equals(replacedString, StringComparison.OrdinalIgnoreCase)))
-                    return false;
+                if (usersQuests.Any(s => s.Equals(replacedString, StringComparison.OrdinalIgnoreCase)))
+                    aQuestReq.CanComplete = true;
+                else
+                    eligible = false;
             }
 
-            return true;
+            return eligible;
         }
         
         private static bool CompareSkillLevels(User currentUser, AchievementObject achievement)
         {
-            List<Tuple<string, int>> aSkillReqs = achievement.ASkillReqs;
+            bool eligible = true;
+            List<ASkillReq> aSkillReqs = achievement.ASkillReqs;
             Dictionary<string, long[]> usersSkills = currentUser.Levels;
 
             foreach (var aSkillReq in aSkillReqs)
             {
-                if (usersSkills.ContainsKey(aSkillReq.Item1))
+                // if requirements has a certain skill, determine if user's level is greater than that skill
+                if (usersSkills.ContainsKey(aSkillReq.Skill))
                 {
-                    int i = (int)usersSkills[aSkillReq.Item1].ElementAt(1);
-                    if (i < aSkillReq.Item2)
-                        return false;
+                    int i = (int)usersSkills[aSkillReq.Skill].ElementAt(1);
+                    if (i >= aSkillReq.Level)
+                        aSkillReq.CanComplete = true;
+                    else
+                        eligible = false;
                 }
                 else
-                    return false;
+                    eligible = false;
                 
             }
-            return true;
+            return eligible;
         }
     }
 }

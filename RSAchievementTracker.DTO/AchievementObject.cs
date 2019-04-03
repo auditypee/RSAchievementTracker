@@ -15,8 +15,10 @@ namespace RSAchievementTracker.DTO
         public string AMembers { get; set; }
         public List<string> ACategories { get; set; }
         public List<string> ASubcategories { get; set; }
-        public List<string> AQuestReqs { get; set; }
-        public List<Tuple<string, int>> ASkillReqs { get; set; }
+
+        public List<AQuestReq> AQuestReqs { get; set; }
+        public List<ASkillReq> ASkillReqs { get; set; }
+        
         public bool AEligible { get; set; }
 
         public AchievementObject(string name, string description, int runescore,
@@ -29,9 +31,46 @@ namespace RSAchievementTracker.DTO
             AMembers = members;
             ACategories = categories;
             ASubcategories = subcategories;
-            AQuestReqs = questReqs;
-            ASkillReqs = skillReqs;
+
+            AQuestReqs = new List<AQuestReq>();
+            foreach (var questReq in questReqs)
+            {
+                AQuestReq qr = new AQuestReq
+                {
+                    Quest = questReq,
+                    CanComplete = false
+                };
+                AQuestReqs.Add(qr);
+            }
+
+            ASkillReqs = new List<ASkillReq>();
+            foreach (var skillReq in skillReqs)
+            {
+                ASkillReq sr = new ASkillReq
+                {
+                    Level = skillReq.Item2,
+                    Skill = skillReq.Item1,
+                    CanComplete = false
+                };
+                ASkillReqs.Add(sr);
+            }
+
             AEligible = false;
         }
+    }
+
+    [Serializable]
+    public class AQuestReq
+    {
+        public string Quest { get; set; }
+        public bool CanComplete { get; set; }
+    }
+
+    [Serializable]
+    public class ASkillReq
+    {
+        public int Level { get; set; }
+        public string Skill { get; set; }
+        public bool CanComplete { get; set; }
     }
 }

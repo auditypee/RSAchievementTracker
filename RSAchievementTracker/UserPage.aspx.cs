@@ -141,8 +141,8 @@ namespace RSAchievementTracker
                 new DataColumn("AchName", typeof(string)),
                 new DataColumn("AchMembers", typeof(string)),
                 new DataColumn("AchDescription", typeof(string)),
-                new DataColumn("AchQuestReq", typeof(string)),
-                new DataColumn("AchSkillReq", typeof(string)),
+                new DataColumn("AchQuestReq", typeof(List<AQuestReq>)),
+                new DataColumn("AchSkillReq", typeof(List<ASkillReq>)),
                 new DataColumn("AchRunescore", typeof(int)),
                 new DataColumn("AchEligible", typeof(bool))
             });
@@ -158,12 +158,17 @@ namespace RSAchievementTracker
                 int runescore = achievement.ARunescore;
                 string members = achievement.AMembers;
                 string eligible = achievement.AEligible.ToString();
-                
-                string questReqs = string.Join("|", achievement.AQuestReqs.ToArray());
+                var questReqs = achievement.AQuestReqs;
+                var skillReqs = achievement.ASkillReqs;
+                /*
+                string questReqs = "";
+                foreach (var questReq in achievement.AQuestReqs)
+                    questReqs += string.Format("{0}|", questReq.Quest);
+
                 string skillReqs = "";
                 foreach (var skillReq in achievement.ASkillReqs)
-                    skillReqs += string.Format("{0} {1}|", skillReq.Item2, skillReq.Item1);
-
+                    skillReqs += string.Format("{0} {1}|", skillReq.Level, skillReq.Skill);
+                */
                 achievementsTable.Rows.Add(name, members, description,
                     questReqs, skillReqs, runescore, eligible);
             }
@@ -175,14 +180,15 @@ namespace RSAchievementTracker
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
+                
                 BulletedList questReqBL = (BulletedList)e.Row.FindControl("AchQuestReqsBL");
                 BulletedList skillReqBL = (BulletedList)e.Row.FindControl("AchSkillReqsBL");
 
-                List<string> qr = ((DataRowView)e.Row.DataItem)["AchQuestReq"].ToString().Split('|').ToList();
-                List<string> sr = ((DataRowView)e.Row.DataItem)["AchSkillReq"].ToString().Split('|').ToList();
+                List<AQuestReq> qr = (List<AQuestReq>)((DataRowView)e.Row.DataItem)["AchQuestReq"];
+                List<ASkillReq> sr = (List<ASkillReq>)((DataRowView)e.Row.DataItem)["AchSkillReq"];
 
-                qr = RemoveEmpty(qr);
-                sr = RemoveEmpty(sr);
+                //qr = RemoveEmpty(qr);
+                //sr = RemoveEmpty(sr);
 
                 questReqBL.DataSource = qr;
                 questReqBL.DataBind();
