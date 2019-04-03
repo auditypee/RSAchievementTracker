@@ -231,31 +231,44 @@
                                     <asp:AsyncPostBackTrigger ControlID="Exploration" EventName="Click" />
                                 </Triggers>
                                 <ContentTemplate>
-                                    <asp:GridView ID="achievementsGridView" CssClass="table table-sm table-striped" 
-                                        runat="server" AutoGenerateColumns="false"
-                                        OnRowDataBound="AchievementsGridView_RowDataBound">
-                                        <Columns>
-                                            <asp:BoundField DataField="AchName" HeaderText="Name"/>
-                                            <asp:BoundField DataField="AchMembers" HeaderText="Members"/>
-                                            <asp:BoundField DataField="AchDescription" HeaderText="Description"/>
-                                            <asp:TemplateField HeaderText="Quest Requirements">
-                                                <ItemTemplate>
-                                                    <asp:BulletedList ID="AchQuestReqsBL" runat="server">
-
-                                                    </asp:BulletedList>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Skill Requirements" ItemStyle-Width="200px">
-                                                <ItemTemplate>
-                                                    <asp:BulletedList ID="AchSkillReqsBL" runat="server">
-
-                                                    </asp:BulletedList>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:BoundField DataField="AchRunescore" HeaderText="Runescore" />
-                                            <asp:BoundField DataField="AchEligible" HeaderText="Eligible" />
-                                        </Columns>
-                                    </asp:GridView>
+                                    <asp:Repeater ID="AchievementsRepeater" runat="server"
+                                        OnItemDataBound="AchievementsRepeater_ItemDataBound">
+                                        <ItemTemplate>
+                                            <div class="row">
+                                                <div class="col-sm-1">
+                                                    <asp:Label ID="RuScLbl" runat="server" Text='<%# Eval("AchRunescore") %>'></asp:Label>
+                                                </div>
+                                                <div class="col">
+                                                    <asp:Label ID="NameLbl" runat="server" Text='<%# Eval("AchName") %>'></asp:Label>
+                                                    <br />
+                                                    <asp:Label ID="DescLbl" runat="server" Text='<%# Eval("AchDescription") %>'></asp:Label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <asp:Repeater ID="AchQuestReqRepeater" runat="server">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="AchQuestReqLbl" runat="server" Text='<%# Eval("Quest") %>'></asp:Label>
+                                                            <asp:CheckBox ID="QuestReqChk" runat="server" Enabled="false" Checked='<%# Eval("CanComplete") %>'/>
+                                                            <br />
+                                                        </ItemTemplate>
+                                                    </asp:Repeater>
+                                                </div>
+                                                <div class="col">
+                                                    <asp:Repeater ID="AchSkillReqRepeater" runat="server">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="AchSkillReqLbl" runat="server" Text='<%# string.Format("{0} {1}", Eval("Level"), Eval("Skill")) %>'></asp:Label>
+                                                            <asp:CheckBox ID="SkillReqChk" runat="server" Enabled="false" Checked='<%# Eval("CanComplete") %>'/>
+                                                            <br />
+                                                        </ItemTemplate>
+                                                    </asp:Repeater>
+                                                </div>
+                                            </div>
+                                        </ItemTemplate>
+                                        <SeparatorTemplate>
+                                            <p>----</p>
+                                        </SeparatorTemplate>
+                                    </asp:Repeater>
                                 </ContentTemplate>
                             </asp:UpdatePanel>
                         </div>

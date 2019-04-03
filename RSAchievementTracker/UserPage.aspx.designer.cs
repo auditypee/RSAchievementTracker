@@ -742,12 +742,12 @@ namespace RSAchievementTracker {
         protected global::System.Web.UI.UpdatePanel AchievementsUpdatePanel;
         
         /// <summary>
-        /// achievementsGridView control.
+        /// AchievementsRepeater control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView achievementsGridView;
+        protected global::System.Web.UI.WebControls.Repeater AchievementsRepeater;
     }
 }

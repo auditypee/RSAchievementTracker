@@ -67,14 +67,10 @@ namespace RSAchievementTracker
 
             ViewState.Add("User", helper.CurrentUser);
         }
-
-        /*
-         * Creates the data table from the user's stats
-         */
+        
         protected void CreateStatsTable(Dictionary<string, long[]> data)
         {
             statsDataTable = new DataTable();
-            // creates the columns
             statsDataTable.Columns.AddRange(new DataColumn[4] {
                 new DataColumn("Skill", typeof(string)),
                 new DataColumn("Level", typeof(long)),
@@ -128,10 +124,12 @@ namespace RSAchievementTracker
         }
 
 
-        /*
-         * 
-         * 
-         */
+        /// <summary>
+        /// Creates a table containing all the AchievementObject's items
+        /// Should be called using DataBind.Eval() function in the .aspx file
+        /// Also implements the user's data if given
+        /// </summary>
+        /// <param name="achievements">List of achievements that will be converted to a table</param>
         protected void CreateAchievementsTable(List<AchievementObject> achievements)
         {
             achievementsTable = new DataTable();
@@ -160,15 +158,10 @@ namespace RSAchievementTracker
                 string eligible = achievement.AEligible.ToString();
                 var questReqs = achievement.AQuestReqs;
                 var skillReqs = achievement.ASkillReqs;
-                /*
-                string questReqs = "";
-                foreach (var questReq in achievement.AQuestReqs)
-                    questReqs += string.Format("{0}|", questReq.Quest);
 
-                string skillReqs = "";
-                foreach (var skillReq in achievement.ASkillReqs)
-                    skillReqs += string.Format("{0} {1}|", skillReq.Level, skillReq.Skill);
-                */
+                if (questReqs == null)
+                    System.Diagnostics.Debug.Write("questReqs is null");
+
                 achievementsTable.Rows.Add(name, members, description,
                     questReqs, skillReqs, runescore, eligible);
             }
@@ -176,33 +169,20 @@ namespace RSAchievementTracker
             ViewState.Add("AchievementsTable", achievementsTable);
         }
 
-        protected void AchievementsGridView_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void AchievementsRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
-                
-                BulletedList questReqBL = (BulletedList)e.Row.FindControl("AchQuestReqsBL");
-                BulletedList skillReqBL = (BulletedList)e.Row.FindControl("AchSkillReqsBL");
+                Repeater questReqRepeater = (Repeater)e.Item.FindControl("AchQuestReqRepeater");
+                List<AQuestReq> aQuestReqs = (List<AQuestReq>)((DataRowView)e.Item.DataItem)["AchQuestReq"];
+                questReqRepeater.DataSource = aQuestReqs;
+                questReqRepeater.DataBind();
 
-                List<AQuestReq> qr = (List<AQuestReq>)((DataRowView)e.Row.DataItem)["AchQuestReq"];
-                List<ASkillReq> sr = (List<ASkillReq>)((DataRowView)e.Row.DataItem)["AchSkillReq"];
-
-                //qr = RemoveEmpty(qr);
-                //sr = RemoveEmpty(sr);
-
-                questReqBL.DataSource = qr;
-                questReqBL.DataBind();
-
-                skillReqBL.DataSource = sr;
-                skillReqBL.DataBind();
+                Repeater skillReqRepeater = (Repeater)e.Item.FindControl("AchSkillReqRepeater");
+                List<ASkillReq> aSkillReqs = (List<ASkillReq>)((DataRowView)e.Item.DataItem)["AchSkillReq"];
+                skillReqRepeater.DataSource = aSkillReqs;
+                skillReqRepeater.DataBind();
             }
-        }
-
-        private List<string> RemoveEmpty(List<string> list)
-        {
-            list = list.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct().ToList();
-
-            return list;
         }
 
         protected void CategoriesBtn_Click(object sender, EventArgs e)
@@ -211,8 +191,8 @@ namespace RSAchievementTracker
             string category = categoryBtn.ID;
 
             CreateAchievementsTable(GetAchievements.GetCategoryAchievements(category));
-            achievementsGridView.DataSource = achievementsTable;
-            achievementsGridView.DataBind();
+            AchievementsRepeater.DataSource = achievementsTable;
+            AchievementsRepeater.DataBind();
         }
 
         protected void SubcategoriesBtn_Click(object sender, EventArgs e)
@@ -221,8 +201,8 @@ namespace RSAchievementTracker
             string subcategory = subcategoryBtn.Text;
 
             CreateAchievementsTable(GetAchievements.GetSubcategoryAchievements(subcategory));
-            achievementsGridView.DataSource = achievementsTable;
-            achievementsGridView.DataBind();
+            AchievementsRepeater.DataSource = achievementsTable;
+            AchievementsRepeater.DataBind();
         }
 
         protected void PreRenderBtnTrigger(object sender, EventArgs e)
@@ -232,7 +212,6 @@ namespace RSAchievementTracker
             ScriptManager1.RegisterAsyncPostBackControl(btn);
             AchievementsUpdatePanel.Update();
         }
-
 
 
 
