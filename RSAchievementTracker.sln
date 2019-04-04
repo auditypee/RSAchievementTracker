@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSAchievementTracker.Presentation", "RSAchievementTracker\RSAchievementTracker.Presentation.csproj", "{9DFF1658-20B5-42EE-87BE-9A3686097154}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSAchievementTracker.Persistence", "RSAchievementTracker.Persistence\RSAchievementTracker.Persistence.csproj", "{AF179A54-D272-43D4-A8C7-8CC0A5105ED1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSAchievementTracker.DTO", "RSAchievementTracker.DTO\RSAchievementTracker.DTO.csproj", "{D4054E8D-232D-422A-9C0F-361A728FDCEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSAchievementTracker.Domain", "RSAchievementTracker.Re\RSAchievementTracker.Domain.csproj", "{4DF40210-1B0A-4510-937D-B40DE46D0580}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSAchievementTracker.DomainTests", "RSAchievementTracker.DomainTests\RSAchievementTracker.DomainTests.csproj", "{9F9525D5-D949-4628-AEAD-A1DFCC75E51E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSAchievementTracker.Presentation", "RSAchievementTracker.Presentation\RSAchievementTracker.Presentation.csproj", "{9DFF1658-20B5-42EE-87BE-9A3686097154}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSAchievementTracker.Domain", "RSAchievementTracker.Domain\RSAchievementTracker.Domain.csproj", "{4DF40210-1B0A-4510-937D-B40DE46D0580}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9DFF1658-20B5-42EE-87BE-9A3686097154}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9DFF1658-20B5-42EE-87BE-9A3686097154}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9DFF1658-20B5-42EE-87BE-9A3686097154}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9DFF1658-20B5-42EE-87BE-9A3686097154}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AF179A54-D272-43D4-A8C7-8CC0A5105ED1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AF179A54-D272-43D4-A8C7-8CC0A5105ED1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF179A54-D272-43D4-A8C7-8CC0A5105ED1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -29,6 +27,14 @@ Global
 		{D4054E8D-232D-422A-9C0F-361A728FDCEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4054E8D-232D-422A-9C0F-361A728FDCEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4054E8D-232D-422A-9C0F-361A728FDCEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F9525D5-D949-4628-AEAD-A1DFCC75E51E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F9525D5-D949-4628-AEAD-A1DFCC75E51E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F9525D5-D949-4628-AEAD-A1DFCC75E51E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F9525D5-D949-4628-AEAD-A1DFCC75E51E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DFF1658-20B5-42EE-87BE-9A3686097154}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DFF1658-20B5-42EE-87BE-9A3686097154}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DFF1658-20B5-42EE-87BE-9A3686097154}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DFF1658-20B5-42EE-87BE-9A3686097154}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4DF40210-1B0A-4510-937D-B40DE46D0580}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4DF40210-1B0A-4510-937D-B40DE46D0580}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DF40210-1B0A-4510-937D-B40DE46D0580}.Release|Any CPU.ActiveCfg = Release|Any CPU
