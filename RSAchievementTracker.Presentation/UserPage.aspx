@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="UserPage.aspx.cs" Inherits="RSAchievementTracker.UserPage" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="UserPage.aspx.cs" Inherits="RSAchievementTracker.Presentation.UserPage" %>
 
 <!DOCTYPE html>
 
@@ -257,7 +257,7 @@
                                                 <div class="col">
                                                     <asp:Repeater ID="AchSkillReqRepeater" runat="server">
                                                         <ItemTemplate>
-                                                            <asp:Label ID="AchSkillReqLbl" runat="server" Text='<%# string.Format("{0} {1}", Eval("Level"), Eval("Skill")) %>'></asp:Label>
+                                                            <asp:Label ID="AchSkillReqLbl" runat="server" Text='<%# Eval("LevelSkill") %>'></asp:Label>
                                                             <asp:CheckBox ID="SkillReqChk" runat="server" Enabled="false" Checked='<%# Eval("CanComplete") %>'/>
                                                             <br />
                                                         </ItemTemplate>

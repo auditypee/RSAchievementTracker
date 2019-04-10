@@ -1,13 +1,11 @@
-﻿using System;
-using System.Net;
+﻿using Newtonsoft.Json;
+using RSAchievementTracker.DTO;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
-using RSAchievementTracker.DTO;
+using System.Net;
 
 namespace RSAchievementTracker.Domain
 {
-
     public class Helper
     {
         public User CurrentUser { get; private set; }
@@ -64,6 +62,7 @@ namespace RSAchievementTracker.Domain
         /*
          * Initializes the CurrentUser.Levels from the given jagged array
          */
+
         private void CreateLevelsDict(long[][] stats)
         {
             var levels = CurrentUser.Levels;
@@ -80,12 +79,12 @@ namespace RSAchievementTracker.Domain
         /*
          * Deserializes the json string to convert to quest object and sets CurrentUser.Quests to that list
          */
+
         public void PopulateQuestsData(string questsJson)
         {
             var quests = JsonConvert.DeserializeObject<Quests>(questsJson);
 
             CurrentUser.Quests = quests.ListOfQuests.ToList();
         }
-        
     }
 }

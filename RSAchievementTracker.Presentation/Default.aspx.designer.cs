@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RSAchievementTracker {
+namespace RSAchievementTracker.Presentation {
     
     
     public partial class Default {

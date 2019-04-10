@@ -11,7 +11,7 @@ using RSAchievementTracker.DTO;
 using System.Data;
 using System.Web.UI.HtmlControls;
 
-namespace RSAchievementTracker
+namespace RSAchievementTracker.Presentation
 {
     public partial class UserPage : System.Web.UI.Page
     {

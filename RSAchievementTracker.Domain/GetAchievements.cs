@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RSAchievementTracker.DTO;
 using RSAchievementTracker.Persistence;
-using RSAchievementTracker.DTO;
+using System.Collections.Generic;
 
 namespace RSAchievementTracker.Domain
 {
@@ -14,7 +10,7 @@ namespace RSAchievementTracker.Domain
         {
             return GetDatabaseItems.GetAllAchievements();
         }
-        
+
         public static List<AchievementObject> GetCategoryAchievements(string category)
         {
             return GetDatabaseItems.GetCategoryAchievements(category);

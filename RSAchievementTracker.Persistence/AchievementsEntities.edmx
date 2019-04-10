@@ -11,7 +11,7 @@
           </Key>
           <Property Name="AchievementId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="Description" Type="varchar(max)" Nullable="false" />
           <Property Name="Runescore" Type="int" Nullable="false" />
           <Property Name="Members" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="Link" Type="varchar" MaxLength="150" Nullable="false" />
@@ -49,11 +49,10 @@
         </EntityType>
         <EntityType Name="SkillReq">
           <Key>
-            <PropertyRef Name="SkillsReqId" />
+            <PropertyRef Name="SkillReqId" />
           </Key>
-          <Property Name="SkillsReqId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Skill" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Level" Type="int" Nullable="false" />
+          <Property Name="SkillReqId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LevelSkill" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="AchievementId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Subcategory">
@@ -64,7 +63,7 @@
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CategoryId" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Achievement_Category">
+        <Association Name="FK_AchievementsCategories_Achievement">
           <End Role="Achievement" Type="Self.Achievement" Multiplicity="1" />
           <End Role="AchievementsCategories" Type="Self.AchievementsCategories" Multiplicity="*" />
           <ReferentialConstraint>
@@ -76,7 +75,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Achievement_Subcategory">
+        <Association Name="FK_AchievementsCategories_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="AchievementsCategories" Type="Self.AchievementsCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="AchievementsCategories">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AchievementsSubcategories_Achievement">
           <End Role="Achievement" Type="Self.Achievement" Multiplicity="1" />
           <End Role="AchievementsSubcategories" Type="Self.AchievementsSubcategories" Multiplicity="*" />
           <ReferentialConstraint>
@@ -88,15 +99,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Category_Achievement">
-          <End Role="Category" Type="Self.Category" Multiplicity="1" />
-          <End Role="AchievementsCategories" Type="Self.AchievementsCategories" Multiplicity="*" />
+        <Association Name="FK_AchievementsSubcategories_Subcategory">
+          <End Role="Subcategory" Type="Self.Subcategory" Multiplicity="1" />
+          <End Role="AchievementsSubcategories" Type="Self.AchievementsSubcategories" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Category">
-              <PropertyRef Name="CategoryId" />
+            <Principal Role="Subcategory">
+              <PropertyRef Name="SubcategoryId" />
             </Principal>
-            <Dependent Role="AchievementsCategories">
-              <PropertyRef Name="CategoryId" />
+            <Dependent Role="AchievementsSubcategories">
+              <PropertyRef Name="SubcategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -112,7 +123,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SkillReq_ToAchievement">
+        <Association Name="FK_SkillsReq_ToAchievement">
           <End Role="Achievement" Type="Self.Achievement" Multiplicity="1" />
           <End Role="SkillReq" Type="Self.SkillReq" Multiplicity="*" />
           <ReferentialConstraint>
@@ -121,18 +132,6 @@
             </Principal>
             <Dependent Role="SkillReq">
               <PropertyRef Name="AchievementId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Subcategory_Achievement">
-          <End Role="Subcategory" Type="Self.Subcategory" Multiplicity="1" />
-          <End Role="AchievementsSubcategories" Type="Self.AchievementsSubcategories" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Subcategory">
-              <PropertyRef Name="SubcategoryId" />
-            </Principal>
-            <Dependent Role="AchievementsSubcategories">
-              <PropertyRef Name="SubcategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -156,29 +155,29 @@
           <EntitySet Name="QuestReq" EntityType="Self.QuestReq" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SkillReq" EntityType="Self.SkillReq" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Subcategory" EntityType="Self.Subcategory" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Achievement_Category" Association="Self.FK_Achievement_Category">
+          <AssociationSet Name="FK_AchievementsCategories_Achievement" Association="Self.FK_AchievementsCategories_Achievement">
             <End Role="Achievement" EntitySet="Achievement" />
             <End Role="AchievementsCategories" EntitySet="AchievementsCategories" />
           </AssociationSet>
-          <AssociationSet Name="FK_Achievement_Subcategory" Association="Self.FK_Achievement_Subcategory">
+          <AssociationSet Name="FK_AchievementsCategories_Category" Association="Self.FK_AchievementsCategories_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="AchievementsCategories" EntitySet="AchievementsCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AchievementsSubcategories_Achievement" Association="Self.FK_AchievementsSubcategories_Achievement">
             <End Role="Achievement" EntitySet="Achievement" />
             <End Role="AchievementsSubcategories" EntitySet="AchievementsSubcategories" />
           </AssociationSet>
-          <AssociationSet Name="FK_Category_Achievement" Association="Self.FK_Category_Achievement">
-            <End Role="Category" EntitySet="Category" />
-            <End Role="AchievementsCategories" EntitySet="AchievementsCategories" />
+          <AssociationSet Name="FK_AchievementsSubcategories_Subcategory" Association="Self.FK_AchievementsSubcategories_Subcategory">
+            <End Role="Subcategory" EntitySet="Subcategory" />
+            <End Role="AchievementsSubcategories" EntitySet="AchievementsSubcategories" />
           </AssociationSet>
           <AssociationSet Name="FK_QuestReq_ToAchievement" Association="Self.FK_QuestReq_ToAchievement">
             <End Role="Achievement" EntitySet="Achievement" />
             <End Role="QuestReq" EntitySet="QuestReq" />
           </AssociationSet>
-          <AssociationSet Name="FK_SkillReq_ToAchievement" Association="Self.FK_SkillReq_ToAchievement">
+          <AssociationSet Name="FK_SkillsReq_ToAchievement" Association="Self.FK_SkillsReq_ToAchievement">
             <End Role="Achievement" EntitySet="Achievement" />
             <End Role="SkillReq" EntitySet="SkillReq" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Subcategory_Achievement" Association="Self.FK_Subcategory_Achievement">
-            <End Role="Subcategory" EntitySet="Subcategory" />
-            <End Role="AchievementsSubcategories" EntitySet="AchievementsSubcategories" />
           </AssociationSet>
           <AssociationSet Name="FK_Subcategory_ToCategory" Association="Self.FK_Subcategory_ToCategory">
             <End Role="Category" EntitySet="Category" />
@@ -196,12 +195,12 @@
           </Key>
           <Property Name="AchievementId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Runescore" Type="Int32" Nullable="false" />
           <Property Name="Members" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Link" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="QuestReqs" Relationship="Self.FK_QuestReq_ToAchievement" FromRole="Achievement" ToRole="QuestReq" />
-          <NavigationProperty Name="SkillReqs" Relationship="Self.FK_SkillReq_ToAchievement" FromRole="Achievement" ToRole="SkillReq" />
+          <NavigationProperty Name="SkillReqs" Relationship="Self.FK_SkillsReq_ToAchievement" FromRole="Achievement" ToRole="SkillReq" />
           <NavigationProperty Name="Categories" Relationship="Self.AchievementsCategories" FromRole="Achievement" ToRole="Category" />
           <NavigationProperty Name="Subcategories" Relationship="Self.AchievementsSubcategories" FromRole="Achievement" ToRole="Subcategory" />
         </EntityType>
@@ -225,13 +224,12 @@
         </EntityType>
         <EntityType Name="SkillReq">
           <Key>
-            <PropertyRef Name="SkillsReqId" />
+            <PropertyRef Name="SkillReqId" />
           </Key>
-          <Property Name="SkillsReqId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Skill" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Level" Type="Int32" Nullable="false" />
+          <Property Name="SkillReqId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LevelSkill" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AchievementId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Achievement" Relationship="Self.FK_SkillReq_ToAchievement" FromRole="SkillReq" ToRole="Achievement" />
+          <NavigationProperty Name="Achievement" Relationship="Self.FK_SkillsReq_ToAchievement" FromRole="SkillReq" ToRole="Achievement" />
         </EntityType>
         <EntityType Name="Subcategory">
           <Key>
@@ -255,7 +253,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SkillReq_ToAchievement">
+        <Association Name="FK_SkillsReq_ToAchievement">
           <End Role="Achievement" Type="Self.Achievement" Multiplicity="1" />
           <End Role="SkillReq" Type="Self.SkillReq" Multiplicity="*" />
           <ReferentialConstraint>
@@ -297,7 +295,7 @@
             <End Role="Achievement" EntitySet="Achievements" />
             <End Role="QuestReq" EntitySet="QuestReqs" />
           </AssociationSet>
-          <AssociationSet Name="FK_SkillReq_ToAchievement" Association="Self.FK_SkillReq_ToAchievement">
+          <AssociationSet Name="FK_SkillsReq_ToAchievement" Association="Self.FK_SkillsReq_ToAchievement">
             <End Role="Achievement" EntitySet="Achievements" />
             <End Role="SkillReq" EntitySet="SkillReqs" />
           </AssociationSet>
@@ -352,9 +350,8 @@
           <EntitySetMapping Name="SkillReqs">
             <EntityTypeMapping TypeName="AchievementsDatabaseModel.SkillReq">
               <MappingFragment StoreEntitySet="SkillReq">
-                <ScalarProperty Name="SkillsReqId" ColumnName="SkillsReqId" />
-                <ScalarProperty Name="Skill" ColumnName="Skill" />
-                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="SkillReqId" ColumnName="SkillReqId" />
+                <ScalarProperty Name="LevelSkill" ColumnName="LevelSkill" />
                 <ScalarProperty Name="AchievementId" ColumnName="AchievementId" />
               </MappingFragment>
             </EntityTypeMapping>

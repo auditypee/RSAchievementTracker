@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="RSAchievementTracker.Default" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="RSAchievementTracker.Presentation.Default" %>
 
 <!DOCTYPE html>
 
@@ -6,23 +6,22 @@
 <head runat="server">
     <title>RS Achievement Tracker</title>
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
-
 </head>
 <body>
     <div class="container">
         <form id="form1" runat="server">
             <div class="row">
                 <div class="input-group mb-3 col-sm-4">
-                    <asp:TextBox ID="userNameTB" CssClass="form-control" placeholder="Username" runat="server"></asp:TextBox>
+                    <asp:textbox id="userNameTB" cssclass="form-control" placeholder="Username" runat="server"></asp:textbox>
                     <div class="input-group-append">
-                        <asp:Button ID="TrackBtn" CssClass="btn btn-light" runat="server" OnClick="TrackBtn_Click" Text="Track" />
+                        <asp:button id="TrackBtn" cssclass="btn btn-light" runat="server" onclick="TrackBtn_Click" text="Track" />
                     </div>
                 </div>
             </div>
             <div class="row">
-                <asp:Label ID="UsernameLbl" runat="server" Text=""></asp:Label>
+                <asp:label id="UsernameLbl" runat="server" text=""></asp:label>
                 <br />
-                <asp:Label ID="WebErrorLbl" runat="server" Text=""></asp:Label>
+                <asp:label id="WebErrorLbl" runat="server" text=""></asp:label>
             </div>
         </form>
     </div>

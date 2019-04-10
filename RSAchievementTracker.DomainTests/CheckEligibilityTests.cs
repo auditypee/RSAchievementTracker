@@ -5,31 +5,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RSAchievementTracker.DTO;
+using NUnit.Framework;
 
 namespace RSAchievementTracker.Domain.UnitTests
 {
-    [TestClass()]
+    [TestFixture]
     public class CheckEligibilityTests
     {
-        [TestMethod()]
+        [Test]
         public void EligibilityTest()
         {
-            List<AchievementObject> achievementObjects = new List<AchievementObject>
-            {
-                new AchievementObject(
-                "Advanced Sweeping",
-                "Fully enchant your broomstick after the 'Swept Away' quest.",
-                15,
-                "Yes",
-                new List<string> { "Completionist" },
-                new List<string> { "Master Quest Cape", "Trimmed Completionist Cape" },
-                new List<string> { "Swept Away", "Diamond in the Rough", "Lunar Diplomacy", "Underground Pass" },
-                new List<Tuple<string, int>>()
-                )
-            };
-
-            Assert.Fail();
+            
         }
     }
 }

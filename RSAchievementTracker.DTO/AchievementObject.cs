@@ -23,7 +23,7 @@ namespace RSAchievementTracker.DTO
 
         public AchievementObject(string name, string description, int runescore,
             string members, List<string> categories, List<string> subcategories,
-            List<string> questReqs, List<Tuple<string, int>> skillReqs)
+            List<string> questReqs, List<string> skillReqs)
         {
             AName = name;
             ADescription = description;
@@ -48,8 +48,7 @@ namespace RSAchievementTracker.DTO
             {
                 ASkillReq sr = new ASkillReq
                 {
-                    Level = skillReq.Item2,
-                    Skill = skillReq.Item1,
+                    LevelSkill = skillReq,
                     CanComplete = false
                 };
                 ASkillReqs.Add(sr);
@@ -69,8 +68,7 @@ namespace RSAchievementTracker.DTO
     [Serializable]
     public class ASkillReq
     {
-        public int Level { get; set; }
-        public string Skill { get; set; }
+        public string LevelSkill { get; set; }
         public bool CanComplete { get; set; }
     }
 }
