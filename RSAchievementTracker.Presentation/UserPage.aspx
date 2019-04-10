@@ -33,7 +33,7 @@
                 border-color: #03282E;
             }
     </style>
-    <script src="Scripts/jquery-3.0.0.min.js"></script>
+    <script src="Scripts/jquery-3.3.1.min.js"></script>
     <script src="Scripts/bootstrap.min.js"></script>
 </head>
 <body>
@@ -225,6 +225,11 @@
                             </div>
                         </div>
                         <div class="col">
+                            <asp:UpdateProgress ID="AchievementsUpdateProgress" runat="server">
+                                <ProgressTemplate>
+                                    Loading...
+                                </ProgressTemplate>
+                            </asp:UpdateProgress>
                             <asp:UpdatePanel ID="AchievementsUpdatePanel" runat="server" UpdateMode="Conditional">
                                 <Triggers>
                                     <asp:AsyncPostBackTrigger ControlID="Skills" EventName="Click" />
@@ -234,7 +239,7 @@
                                     <asp:Repeater ID="AchievementsRepeater" runat="server"
                                         OnItemDataBound="AchievementsRepeater_ItemDataBound">
                                         <ItemTemplate>
-                                            <div class="row">
+                                            <div class="row rounded-top border border-bottom">
                                                 <div class="col-sm-1">
                                                     <asp:Label ID="RuScLbl" runat="server" Text='<%# Eval("AchRunescore") %>'></asp:Label>
                                                 </div>
@@ -244,7 +249,7 @@
                                                     <asp:Label ID="DescLbl" runat="server" Text='<%# Eval("AchDescription") %>'></asp:Label>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div class="row rounded-bottom border border-top-0">
                                                 <div class="col">
                                                     <asp:Repeater ID="AchQuestReqRepeater" runat="server">
                                                         <ItemTemplate>
@@ -266,7 +271,7 @@
                                             </div>
                                         </ItemTemplate>
                                         <SeparatorTemplate>
-                                            <p>----</p>
+                                            <div></div>
                                         </SeparatorTemplate>
                                     </asp:Repeater>
                                 </ContentTemplate>

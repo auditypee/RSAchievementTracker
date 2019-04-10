@@ -733,6 +733,15 @@ namespace RSAchievementTracker.Presentation {
         protected global::System.Web.UI.WebControls.Button MQCBtn;
         
         /// <summary>
+        /// AchievementsUpdateProgress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdateProgress AchievementsUpdateProgress;
+        
+        /// <summary>
         /// AchievementsUpdatePanel control.
         /// </summary>
         /// <remarks>
