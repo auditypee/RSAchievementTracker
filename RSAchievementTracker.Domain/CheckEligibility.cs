@@ -1,10 +1,7 @@
-﻿using System;
+﻿using RSAchievementTracker.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RSAchievementTracker.Persistence;
-using RSAchievementTracker.DTO;
 using System.Text.RegularExpressions;
 
 namespace RSAchievementTracker.Domain
@@ -47,7 +44,7 @@ namespace RSAchievementTracker.Domain
 
             return eligible;
         }
-        
+
         private static bool CompareSkillLevels(User currentUser, AchievementObject achievement)
         {
             bool eligible = true;
@@ -56,20 +53,60 @@ namespace RSAchievementTracker.Domain
 
             foreach (var aSkillReq in aSkillReqs)
             {
-                // if requirements has a certain skill, determine if user's level is greater than that skill
-                if (usersSkills.ContainsKey(aSkillReq.Skill))
+                if (Regex.IsMatch(aSkillReq.LevelSkill, @" or "))
                 {
-                    int i = (int)usersSkills[aSkillReq.Skill].ElementAt(1);
-                    if (i >= aSkillReq.Level)
-                        aSkillReq.CanComplete = true;
-                    else
-                        eligible = false;
+                    var levelSkills = SeparateSkills(aSkillReq.LevelSkill);
+                    bool canComplete = aSkillReq.CanComplete;
+                    foreach (var levelSkill in levelSkills)
+                    {
+                        if (usersSkills.ContainsKey(levelSkill.Item2))
+                        {
+                            int i = (int)usersSkills[levelSkill.Item2].ElementAt(1);
+                            if (i >= levelSkill.Item1)
+                                canComplete = true;
+                            else
+                                eligible = false;
+                        }
+                    }
+                    aSkillReq.CanComplete = canComplete;
                 }
                 else
-                    eligible = false;
-                
+                {
+                    var levelSkill = SplitLevelSkill(aSkillReq.LevelSkill);
+
+                    if (usersSkills.ContainsKey(levelSkill.Item2))
+                    {
+                        int i = (int)usersSkills[levelSkill.Item2].ElementAt(1);
+                        if (i >= levelSkill.Item1)
+                            aSkillReq.CanComplete = true;
+                        else
+                            eligible = false;
+                    }
+                }
             }
             return eligible;
+        }
+
+        private static List<Tuple<int, string>> SeparateSkills(string orSkills)
+        {
+            List<Tuple<int, string>> listOfSkills = new List<Tuple<int, string>>();
+            List<string> levelSkills = orSkills.Split(new string[] { " or " }, StringSplitOptions.None).ToList();
+            foreach (var levelSkill in levelSkills)
+            {
+                listOfSkills.Add(SplitLevelSkill(levelSkill));
+            }
+
+            return listOfSkills;
+        }
+
+        private static Tuple<int, string> SplitLevelSkill(string levelSkill)
+        {
+            int level = int.Parse(Regex.Match(levelSkill, @"\d+").Value);
+            string skill = Regex.Match(levelSkill, @"[A-Za-z]+\s*[A-Za-z]*").Value;
+
+            Tuple<int, string> result = new Tuple<int, string>(level, skill);
+
+            return result;
         }
     }
 }

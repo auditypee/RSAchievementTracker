@@ -95,17 +95,16 @@ namespace RSAchievementTracker.Persistence
                 questReqs.Add(que.Quest);
             }
 
-            List<Tuple<string, int>> skillReqs = new List<Tuple<string, int>>();
+            List<string> skillReqs = new List<string>();
             foreach (var ski in achievement.SkillReqs)
             {
-                Tuple<string, int> skillLevel = new Tuple<string, int>(ski.Skill, ski.Level);
-                skillReqs.Add(skillLevel);
+                skillReqs.Add(ski.LevelSkill);
             }
             
             AchievementObject achievementObject = new AchievementObject(
                 name, description, runescore, members, categories,
                 subcategories, questReqs, skillReqs
-                );
+            );
 
             return achievementObject;
         }
