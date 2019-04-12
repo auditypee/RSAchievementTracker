@@ -6,6 +6,7 @@
 <head runat="server">
     <title>RS Achievement Tracker</title>
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/achtracker.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">

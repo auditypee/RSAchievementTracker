@@ -54,7 +54,7 @@ namespace RSAchievementTracker.DTO
                 ASkillReqs.Add(sr);
             }
 
-            AEligible = false;
+            AEligible = true;
         }
     }
 

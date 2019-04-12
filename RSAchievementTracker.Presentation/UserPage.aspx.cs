@@ -30,9 +30,12 @@ namespace RSAchievementTracker.Presentation
             {
                 if (Request.QueryString["User"] != null)
                     GetUserInfo();
-
+                    
                 MultiView.ActiveViewIndex = 0;
             }
+
+            if (Request.QueryString["User"] != null)
+                Page.Title = Request.QueryString["User"].ToString();
         }
 
         protected void GetUserInfo()
@@ -110,12 +113,17 @@ namespace RSAchievementTracker.Presentation
                 string title = quest.Title;
                 string difficulty = quest.DifficultyString();
                 string questPoints = quest.QuestPoints.ToString();
-                string members = quest.Members.ToString();
+                bool members = quest.Members;
                 string status = quest.StatusString();
                 questsDataTable.Rows.Add(title, difficulty, questPoints, members, status);
             }
 
             ViewState.Add("QuestsDataTable", questsDataTable);
+        }
+
+        protected void questsGridView_Sorting(object sender, GridViewSortEventArgs e)
+        {
+            
         }
         
         private string NumberFormat(long num)
@@ -213,9 +221,6 @@ namespace RSAchievementTracker.Presentation
             AchievementsUpdatePanel.Update();
         }
 
-
-
-
         protected void ShowStats_Click(object sender, EventArgs e)
         {
             statsDataTable = (DataTable)ViewState["StatsDataTable"];
@@ -227,6 +232,7 @@ namespace RSAchievementTracker.Presentation
             else
             {
                 userStatsLbl.Text = "Please input username.";
+                statsGridView.Visible = false;
             }
 
             MultiView.ActiveViewIndex = 1;
@@ -243,9 +249,7 @@ namespace RSAchievementTracker.Presentation
             }
             else
             {
-                string username = Request.QueryString["User"].ToString();
-
-                userQuestsLbl.Text = string.Format("User \"{0}\" has their Runemetrics profile set to private.", username);
+                userQuestsLbl.Text = string.Format("User has their Runemetrics profile set to private.");
                 questsGridView.Visible = false;
             }
 

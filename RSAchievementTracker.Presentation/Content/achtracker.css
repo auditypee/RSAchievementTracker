@@ -1,0 +1,77 @@
+﻿body {
+    background-color: #040d11;
+    color: #fff;
+}
+
+.btn-subcategory-light {
+    color: #fff;
+    background-color: #102C3A;
+    border-color: #102C3A;
+    text-align: left;
+}
+
+    .btn-subcategory-light:hover {
+        color: #fff;
+        background-color: #1C3B40;
+        border-color: #1C3B40;
+    }
+
+.btn-subcategory-dark {
+    color: #fff;
+    background-color: #0A1F29;
+    border-color: #0A1F29;
+    text-align: left;
+}
+
+    .btn-subcategory-dark:hover {
+        color: #fff;
+        background-color: #03282E;
+        border-color: #03282E;
+    }
+
+
+input[type=checkbox] {
+    display: none;
+}
+
+    input[type=checkbox]:checked + label:before {
+        font-family: octicons;
+        content: "\f03a";
+    }
+
+.achievement {
+    color: #818181;
+    background-color: #1C2C34;
+    text-shadow: 1.1px 1.1px #000000;
+}
+
+.achievement-name {
+    text-transform: uppercase !important;
+    font-weight: 600 !important;
+}
+
+.achievement-name-cantcomplete {
+    text-transform: uppercase !important;
+    font-weight: 600 !important;
+    color: #8D2716;
+}
+
+.achievement-description {
+}
+
+.achievement-description-cantcomplete {
+    color: #8D2716;
+}
+
+.achievement-requirement-cancomplete {
+    color: #fff;
+}
+
+.table {
+    color: #CBAB6F;
+    background-color: #102C3A;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #0A1F29;
+}
