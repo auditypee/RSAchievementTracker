@@ -76,10 +76,6 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\AchievementsDbV2.mdf" />
-    <Content Include="App_Data\AchievementsDbV2_log.ldf">
-      <DependentUpon>AchievementsDbV2.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\achtracker.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -184,7 +180,9 @@
       <Name>RSAchievementTracker.DTO</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
