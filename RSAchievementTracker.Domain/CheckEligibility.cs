@@ -11,7 +11,13 @@ namespace RSAchievementTracker.Domain
         public static List<AchievementObject> Eligibility(User currentUser, List<AchievementObject> achievementsList)
         {
             foreach (var achievement in achievementsList)
-                achievement.AEligible = CompareQuests(currentUser, achievement) && CompareSkillLevels(currentUser, achievement);
+            {
+                bool canCompleteQuestReq = CompareQuests(currentUser, achievement);
+                bool canCompleteSkillReq = CompareSkillLevels(currentUser, achievement);
+
+                achievement.AEligible = canCompleteQuestReq && canCompleteSkillReq;
+            }
+                
 
             return achievementsList;
         }
@@ -25,7 +31,12 @@ namespace RSAchievementTracker.Domain
             {
                 // if user completed that quest, add it to completed quest list
                 if (uq.Status == "COMPLETED")
-                    usersQuests.Add(uq.Title);
+                {
+                    string replacedTitle = uq.Title;
+                    replacedTitle = Regex.Replace(uq.Title, @"\s+\(.*\)", string.Empty);
+                    usersQuests.Add(replacedTitle);
+                }
+                    
             }
 
             // if user's completed quest list doesn't contain a quest requirement, false
