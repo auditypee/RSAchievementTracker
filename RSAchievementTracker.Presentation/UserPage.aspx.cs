@@ -15,14 +15,9 @@ namespace RSAchievementTracker.Presentation
 {
     public partial class UserPage : System.Web.UI.Page
     {
-        private readonly string URLSTATS = "https://secure.runescape.com/m=hiscore/index_lite.ws?player=";
-        private readonly string URLQUESTS = "https://apps.runescape.com/runemetrics/quests?user=";
-        private readonly string INVALIDQUESTS = @"{""quests"":[],""loggedIn"":""false""}";
-
         private DataTable achievementsTable;
         private DataTable statsDataTable;
         private DataTable questsDataTable;
-
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -40,35 +35,17 @@ namespace RSAchievementTracker.Presentation
 
         protected void GetUserInfo()
         {
-            Helper helper = new Helper();
+            
             string username = Request.QueryString["User"].ToString();
-
             UsernameHeader.Text = username;
 
-            // get the user's stats
-            // gets the website's contents
-            string userStats = Helper.GetUserInfo(URLSTATS + username);
+            InitializeUser currentUser = new InitializeUser(username);
+            
+            CreateStatsTable(currentUser.CurrentUser.Levels);
+            if (currentUser.CurrentUser.Quests != null)
+                CreateQuestsTable(currentUser.CurrentUser.Quests);
 
-            // populates the table's data from the string
-            helper.PopulateStatsData(userStats);
-
-            // gets the Dictionary that contains the user's stats then creates the table
-            Dictionary<string, long[]> levels = helper.CurrentUser.Levels;
-            CreateStatsTable(levels);
-
-
-            // get the user's quest progress
-            string userQuests = Helper.GetUserInfo(URLQUESTS + username);
-
-            if (userQuests != INVALIDQUESTS)
-            {
-                helper.PopulateQuestsData(userQuests);
-                List<Quest> quests = helper.CurrentUser.Quests;
-                CreateQuestsTable(quests);
-            }
-            // TODO: - DATA SORTABLE
-
-            ViewState.Add("User", helper.CurrentUser);
+            ViewState.Add("User", currentUser.CurrentUser);
         }
         
         protected void CreateStatsTable(Dictionary<string, long[]> data)
@@ -198,6 +175,7 @@ namespace RSAchievementTracker.Presentation
             Button categoryBtn = (Button)sender;
             string category = categoryBtn.ID;
 
+            CurrentSubcategory.Text = category;
             CreateAchievementsTable(GetAchievements.GetCategoryAchievements(category));
             AchievementsRepeater.DataSource = achievementsTable;
             AchievementsRepeater.DataBind();
@@ -208,6 +186,7 @@ namespace RSAchievementTracker.Presentation
             Button subcategoryBtn = (Button)sender;
             string subcategory = subcategoryBtn.Text;
 
+            CurrentSubcategory.Text = subcategory;
             CreateAchievementsTable(GetAchievements.GetSubcategoryAchievements(subcategory));
             AchievementsRepeater.DataSource = achievementsTable;
             AchievementsRepeater.DataBind();
@@ -235,6 +214,9 @@ namespace RSAchievementTracker.Presentation
                 statsGridView.Visible = false;
             }
 
+            ShowStats.CssClass += " active";
+            ShowQuests.CssClass = "nav-link";
+            ShowAchievements.CssClass = "nav-link";
             MultiView.ActiveViewIndex = 1;
 
         }
@@ -253,12 +235,23 @@ namespace RSAchievementTracker.Presentation
                 questsGridView.Visible = false;
             }
 
+            ShowStats.CssClass = "nav-link";
+            ShowQuests.CssClass += " active";
+            ShowAchievements.CssClass = "nav-link";
             MultiView.ActiveViewIndex = 2;
         }
 
         protected void ShowAchievements_Click(object sender, EventArgs e)
         {
+            ShowStats.CssClass = "nav nav-link";
+            ShowQuests.CssClass = "nav nav-link";
+            ShowAchievements.CssClass += " active";
             MultiView.ActiveViewIndex = 3;
+        }
+
+        protected void NewSearch_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Default.aspx");
         }
     }
 }
