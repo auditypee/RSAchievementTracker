@@ -58,6 +58,15 @@ namespace RSAchievementTracker.Presentation {
         protected global::System.Web.UI.WebControls.Button ShowAchievements;
         
         /// <summary>
+        /// NewSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button NewSearch;
+        
+        /// <summary>
         /// MultiView control.
         /// </summary>
         /// <remarks>
@@ -749,6 +758,15 @@ namespace RSAchievementTracker.Presentation {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel AchievementsUpdatePanel;
+        
+        /// <summary>
+        /// CurrentSubcategory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label CurrentSubcategory;
         
         /// <summary>
         /// AchievementsRepeater control.

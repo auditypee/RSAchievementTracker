@@ -53,7 +53,7 @@
   <ItemGroup>
     <Compile Include="CheckEligibility.cs" />
     <Compile Include="GetAchievements.cs" />
-    <Compile Include="Helper.cs" />
+    <Compile Include="InitializeUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

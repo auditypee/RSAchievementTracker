@@ -5,8 +5,8 @@
 
 .btn-subcategory-light {
     color: #fff;
-    background-color: #102C3A;
-    border-color: #102C3A;
+    background-color: #1C2C34;
+    border-color: #1C2C34;
     text-align: left;
 }
 
@@ -18,8 +18,8 @@
 
 .btn-subcategory-dark {
     color: #fff;
-    background-color: #0A1F29;
-    border-color: #0A1F29;
+    background-color: #071820;
+    border-color: #071820;
     text-align: left;
 }
 
@@ -28,7 +28,6 @@
         background-color: #03282E;
         border-color: #03282E;
     }
-
 
 input[type=checkbox] {
     display: none;
@@ -41,20 +40,37 @@ input[type=checkbox] {
 
 .achievement {
     color: #818181;
-    background-color: #1C2C34;
+    background-color: #131F24;
     text-shadow: 1.1px 1.1px #000000;
 }
 
 .achievement-name {
-    text-transform: uppercase !important;
-    font-weight: 600 !important;
+    text-transform: uppercase;
+    font-weight: 600;
 }
 
 .achievement-name-cantcomplete {
-    text-transform: uppercase !important;
-    font-weight: 600 !important;
+    text-transform: uppercase;
+    font-weight: 600;
     color: #8D2716;
 }
+
+.category {
+    background-color: #0d2d3d !important;
+    color: #426171 !important;
+    border-color: #0d2d3d;
+}
+
+.category-header a {
+    color: #83A5B5;
+}
+
+    .category-header:hover,
+    .category-header:hover a{
+        text-decoration: none;
+        color: #fff;
+        background-color: #20597C;
+    }
 
 .achievement-description {
 }

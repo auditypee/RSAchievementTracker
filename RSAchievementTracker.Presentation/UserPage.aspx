@@ -16,21 +16,35 @@
     <form id="form1" runat="server">
         <div class="container">
             <div class="row">
-                <asp:Label ID="UsernameHeader" runat="server" CssClass="display-1" Text=""></asp:Label>
+                <asp:Label ID="UsernameHeader" runat="server" CssClass="display-1" Text="Username"></asp:Label>
             </div>
             <div class="row">
-                <asp:Button ID="ShowStats" CssClass="btn btn-primary" runat="server" Text="Show Stats" OnClick="ShowStats_Click" />
-                <asp:Button ID="ShowQuests" CssClass="btn btn-primary" runat="server" Text="Show Quests" OnClick="ShowQuests_Click" />
-                <asp:Button ID="ShowAchievements" CssClass="btn btn-primary" runat="server" Text="Show Achievements" OnClick="ShowAchievements_Click" />
+                <div class="col-md-12">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <asp:Button ID="ShowStats" CssClass="nav-link" runat="server" Text="Show Stats" OnClick="ShowStats_Click" />
+                        </li>
+                        <li class="nav-item">
+                            <asp:Button ID="ShowQuests" CssClass="nav-link" runat="server" Text="Show Quests" OnClick="ShowQuests_Click" />
+                        </li>
+                        <li class="nav-item">
+                            <asp:Button ID="ShowAchievements" CssClass="nav-link" runat="server" Text="Show Achievements" OnClick="ShowAchievements_Click" />
+                        </li>
+                        <li class="nav-item ml-auto">
+                            <asp:Button ID="NewSearch" CssClass="nav-link" runat="server" Text="New Search" OnClick="NewSearch_Click" />
+                        </li>
+                    </ul>
+                </div>
             </div>
             <asp:MultiView ID="MultiView" runat="server">
                 <asp:View ID="InitialView" runat="server"></asp:View>
                 <asp:View ID="StatsView" runat="server">
                     <h2>Stats</h2>
                     <asp:Label ID="userStatsLbl" runat="server"></asp:Label>
-                    <asp:GridView ID="statsGridView" CssClass="table table-sm table-striped" UseAccessibleHeader="true" 
+                    <asp:GridView ID="statsGridView" CssClass="table table-sm table-striped" UseAccessibleHeader="true"
                         runat="server">
                     </asp:GridView>
+
                 </asp:View>
                 <asp:View ID="QuestsView" runat="server">
                     <h2>Quests</h2>
@@ -38,12 +52,13 @@
                     <asp:GridView ID="questsGridView" CssClass="table table-sm table-striped" UseAccessibleHeader="true"
                         AutoGenerateColumns="false" runat="server">
                         <Columns>
-                            <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name"/>
+                            <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
                             <asp:BoundField DataField="Difficulty" HeaderText="Difficulty" SortExpression="Difficulty" />
                             <asp:BoundField DataField="Quest Points" HeaderText="Quest Points" SortExpression="Quest Points" />
                             <asp:TemplateField HeaderText="Member" SortExpression="Member">
                                 <ItemTemplate>
-                                    <%# (bool)Eval("Member") ? @"<i class=""octicon-check""></i>" : "" %>
+                                    <input type="checkbox" checked='<%# Eval("Member") %>' runat="server" disabled />
+                                    <label></label>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:BoundField DataField="Status" HeaderText="Status" SortExpression="Status" />
@@ -56,8 +71,8 @@
                     <div class="row">
                         <div class="col-3">
                             <div class="accordion" id="categories">
-                                <div class="card text-center">
-                                    <div class="card-header" id="aSkills">
+                                <div class="card category text-center">
+                                    <div class="card-header category-header"  id="aSkills">
                                         <a data-toggle="collapse" data-parent="#categories" href="#collapseSkills" aria-expanded="true" aria-controls="collapseSkills">
                                             <h5 class="text-center text-uppercase">Skills
                                             </h5>
@@ -94,8 +109,8 @@
                                         </asp:UpdatePanel>
                                     </div>
                                 </div>
-                                <div class="card text-center">
-                                    <div class="card-header" id="aExploration">
+                                <div class="card category text-center">
+                                    <div class="card-header category-header" id="aExploration">
                                         <a data-toggle="collapse" data-parent="#categories" href="#collapseExploration" aria-expanded="true" aria-controls="collapseExploration">
                                             <h5 class="text-center text-uppercase">Exploration
                                             </h5>
@@ -104,31 +119,34 @@
                                     <div class="collapse" id="collapseExploration" aria-labelledby="aExploration" data-parent="#categories">
                                         <asp:UpdatePanel ID="ExplorationUpdatePanel" runat="server">
                                             <ContentTemplate>
-                                                <div class="btn-group-vertical btn-group-sm btn-block">
-                                                    <asp:Button ID="Exploration" CssClass="btn btn-subcategory-light" runat="server" Text="All" OnClick="CategoriesBtn_Click" />
-                                                    <asp:Button ID="ArdougneBtn" CssClass="btn btn-subcategory-dark" runat="server" Text="Ardougne" OnClick="SubcategoriesBtn_Click" />
-                                                    <asp:Button ID="DesertBtn" CssClass="btn btn-subcategory-light" runat="server" Text="Desert" OnClick="SubcategoriesBtn_Click" />
-                                                    <asp:Button ID="DaemonheimBtn" CssClass="btn btn-subcategory-dark" runat="server" Text="Daemonheim" OnClick="SubcategoriesBtn_Click" />
-                                                    <asp:Button ID="FaladorBtn" CssClass="btn btn-subcategory-light" runat="server" Text="Falador" OnClick="SubcategoriesBtn_Click" />
-                                                    <asp:Button ID="FremennikBtn" CssClass="btn btn-subcategory-dark" runat="server" Text="Fremennik" OnClick="SubcategoriesBtn_Click" />
-                                                    <asp:Button ID="KaramjaBtn" CssClass="btn btn-subcategory-light" runat="server" Text="Karamja" OnClick="SubcategoriesBtn_Click" />
-                                                    <asp:Button ID="LodestoneBtn" CssClass="btn btn-subcategory-dark" runat="server" Text="Lodestone" OnClick="SubcategoriesBtn_Click" />
-                                                    <asp:Button ID="LumbridgeBtn" CssClass="btn btn-subcategory-light" runat="server" Text="Lumbridge" OnClick="SubcategoriesBtn_Click" />
-                                                    <asp:Button ID="MenaphosBtn" CssClass="btn btn-subcategory-dark" runat="server" Text="Menaphos" OnClick="SubcategoriesBtn_Click" />
-                                                    <asp:Button ID="MorytaniaBtn" CssClass="btn btn-subcategory-light" runat="server" Text="Morytania" OnClick="SubcategoriesBtn_Click" />
-                                                    <asp:Button ID="SeersVillageBtn" CssClass="btn btn-subcategory-dark" runat="server" Text="Seers' Village" OnClick="SubcategoriesBtn_Click" />
-                                                    <asp:Button ID="TirannwnBtn" CssClass="btn btn-subcategory-light" runat="server" Text="Tirannwn" OnClick="SubcategoriesBtn_Click" />
-                                                    <asp:Button ID="VarrockBtn" CssClass="btn btn-subcategory-dark" runat="server" Text="Varrock" OnClick="SubcategoriesBtn_Click" />
-                                                    <asp:Button ID="WildernessBtn" CssClass="btn btn-subcategory-light" runat="server" Text="Wilderness" OnClick="SubcategoriesBtn_Click" />
-                                                    <asp:Button ID="NewVarrockBtn" CssClass="btn btn-subcategory-dark" runat="server" Text="New Varrock" OnClick="SubcategoriesBtn_Click" />
-                                                    <asp:Button ID="WushankoArcBtn" CssClass="btn btn-subcategory-light" runat="server" Text="Wushanko: The Arc" OnClick="SubcategoriesBtn_Click" />
+                                                <div>
+                                                    <div class="btn-group-vertical btn-group-sm btn-block">
+                                                        <asp:Button ID="Exploration" CssClass="btn btn-subcategory-light" runat="server" Text="All" OnClick="CategoriesBtn_Click" />
+                                                        <asp:Button ID="ArdougneBtn" CssClass="btn btn-subcategory-dark" runat="server" Text="Ardougne" OnClick="SubcategoriesBtn_Click" />
+                                                        <asp:Button ID="DesertBtn" CssClass="btn btn-subcategory-light" runat="server" Text="Desert" OnClick="SubcategoriesBtn_Click" />
+                                                        <asp:Button ID="DaemonheimBtn" CssClass="btn btn-subcategory-dark" runat="server" Text="Daemonheim" OnClick="SubcategoriesBtn_Click" />
+                                                        <asp:Button ID="FaladorBtn" CssClass="btn btn-subcategory-light" runat="server" Text="Falador" OnClick="SubcategoriesBtn_Click" />
+                                                        <asp:Button ID="FremennikBtn" CssClass="btn btn-subcategory-dark" runat="server" Text="Fremennik" OnClick="SubcategoriesBtn_Click" />
+                                                        <asp:Button ID="KaramjaBtn" CssClass="btn btn-subcategory-light" runat="server" Text="Karamja" OnClick="SubcategoriesBtn_Click" />
+                                                        <asp:Button ID="LodestoneBtn" CssClass="btn btn-subcategory-dark" runat="server" Text="Lodestone" OnClick="SubcategoriesBtn_Click" />
+                                                        <asp:Button ID="LumbridgeBtn" CssClass="btn btn-subcategory-light" runat="server" Text="Lumbridge" OnClick="SubcategoriesBtn_Click" />
+                                                        <asp:Button ID="MenaphosBtn" CssClass="btn btn-subcategory-dark" runat="server" Text="Menaphos" OnClick="SubcategoriesBtn_Click" />
+                                                        <asp:Button ID="MorytaniaBtn" CssClass="btn btn-subcategory-light" runat="server" Text="Morytania" OnClick="SubcategoriesBtn_Click" />
+                                                        <asp:Button ID="SeersVillageBtn" CssClass="btn btn-subcategory-dark" runat="server" Text="Seers' Village" OnClick="SubcategoriesBtn_Click" />
+                                                        <asp:Button ID="TirannwnBtn" CssClass="btn btn-subcategory-light" runat="server" Text="Tirannwn" OnClick="SubcategoriesBtn_Click" />
+                                                        <asp:Button ID="VarrockBtn" CssClass="btn btn-subcategory-dark" runat="server" Text="Varrock" OnClick="SubcategoriesBtn_Click" />
+                                                        <asp:Button ID="WildernessBtn" CssClass="btn btn-subcategory-light" runat="server" Text="Wilderness" OnClick="SubcategoriesBtn_Click" />
+                                                        <asp:Button ID="NewVarrockBtn" CssClass="btn btn-subcategory-dark" runat="server" Text="New Varrock" OnClick="SubcategoriesBtn_Click" />
+                                                        <asp:Button ID="WushankoArcBtn" CssClass="btn btn-subcategory-light" runat="server" Text="Wushanko: The Arc" OnClick="SubcategoriesBtn_Click" />
+                                                    </div>
                                                 </div>
+
                                             </ContentTemplate>
                                         </asp:UpdatePanel>
                                     </div>
                                 </div>
-                                <div class="card text-center">
-                                    <div class="card-header" id="aCombat">
+                                <div class="card category text-center">
+                                    <div class="card-header category-header" id="aCombat">
                                         <a data-toggle="collapse" data-parent="#categories" href="#collapseCombat" aria-expanded="true" aria-controls="collapseCombat">
                                             <h5 class="text-center text-uppercase">Combat
                                             </h5>
@@ -151,8 +169,8 @@
                                         </asp:UpdatePanel>
                                     </div>
                                 </div>
-                                <div class="card text-center">
-                                    <div class="card-header" id="aMinigames">
+                                <div class="card category text-center">
+                                    <div class="card-header category-header" id="aMinigames">
                                         <a data-toggle="collapse" data-parent="#categories" href="#collapseMinigames" aria-expanded="true" aria-controls="collapseMinigames">
                                             <h5 class="text-center text-uppercase">Minigames
                                             </h5>
@@ -170,8 +188,8 @@
                                         </asp:UpdatePanel>
                                     </div>
                                 </div>
-                                <div class="card text-center">
-                                    <div class="card-header" id="aMiscellaneous">
+                                <div class="card category text-center">
+                                    <div class="card-header category-header" id="aMiscellaneous">
                                         <a data-toggle="collapse" data-parent="#categories" href="#collapseMiscellaneous" aria-expanded="true" aria-controls="collapseMiscellaneous">
                                             <h5 class="text-center text-uppercase">Miscellaneous
                                             </h5>
@@ -191,8 +209,8 @@
                                         </asp:UpdatePanel>
                                     </div>
                                 </div>
-                                <div class="card text-center">
-                                    <div class="card-header" id="aCompletionist">
+                                <div class="card category text-center">
+                                    <div class="card-header category-header" id="aCompletionist">
                                         <a data-toggle="collapse" data-parent="#categories" href="#collapseCompletionist" aria-expanded="true" aria-controls="collapseCompletionist">
                                             <h5 class="text-center text-uppercase">Completionist
                                             </h5>
@@ -225,9 +243,14 @@
                                     <asp:AsyncPostBackTrigger ControlID="Exploration" EventName="Click" />
                                 </Triggers>
                                 <ContentTemplate>
-                                    <asp:Repeater ID="AchievementsRepeater" runat="server"
-                                        OnItemDataBound="AchievementsRepeater_ItemDataBound">
+                                    <div class="row">
+                                        <asp:Label ID="CurrentSubcategory" CssClass="text-uppercase display-4" runat="server" Text=""></asp:Label>
+                                    </div>
+                                    <asp:Repeater ID="AchievementsRepeater"
+                                        OnItemDataBound="AchievementsRepeater_ItemDataBound"
+                                        runat="server">
                                         <ItemTemplate>
+                                            
                                             <div class="row achievement rounded-top border border-bottom">
                                                 <div class="col-sm-1">
                                                     <asp:Label ID="RuScLbl" runat="server" Text='<%# Eval("AchRunescore") %>'></asp:Label>
@@ -242,7 +265,7 @@
                                                 <div class="col">
                                                     <asp:Repeater ID="AchQuestReqRepeater" runat="server">
                                                         <ItemTemplate>
-                                                            <input type="checkbox" id="QuestReqChk" runat="server" checked='<%# Eval("CanComplete") %>' disabled/>
+                                                            <input type="checkbox" id="QuestReqChk" runat="server" checked='<%# Eval("CanComplete") %>' disabled />
                                                             <label for="QuestReqChk" class='<%# (bool)Eval("CanComplete") ? "achievement-requirement-cancomplete" : "" %>' runat="server"><%# Eval("Quest") %></label>
                                                             <br />
                                                         </ItemTemplate>
@@ -251,7 +274,7 @@
                                                 <div class="col">
                                                     <asp:Repeater ID="AchSkillReqRepeater" runat="server">
                                                         <ItemTemplate>
-                                                            <input type="checkbox" id="SkillReqChk" runat="server" checked='<%# Eval("CanComplete") %>' disabled/>
+                                                            <input type="checkbox" id="SkillReqChk" runat="server" checked='<%# Eval("CanComplete") %>' disabled />
                                                             <label for="SkillReqChk" class='<%# (bool)Eval("CanComplete") ? "achievement-requirement-cancomplete" : "" %>' runat="server"><%# Eval("LevelSkill") %></label>
                                                             <br />
                                                         </ItemTemplate>
@@ -263,6 +286,7 @@
                                             <p></p>
                                         </SeparatorTemplate>
                                     </asp:Repeater>
+
                                 </ContentTemplate>
                             </asp:UpdatePanel>
                         </div>
